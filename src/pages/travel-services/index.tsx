@@ -1,267 +1,206 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, PlaneTakeoff, ShieldCheck, Zap, Navigation, BedDouble, Calendar, ChevronDown, Check, Search, Globe } from 'lucide-react';
 
-// --- TYPES ---
-type ServiceType = 'flight_hotel' | 'flight' | 'hotel';
-type BudgetType = 'economy' | 'business' | 'luxury';
+type FlightClass = 'economy' | 'business' | 'first' | 'private';
 
-const ConciergeBooking: React.FC = () => {
+const COUNTRIES = [
+    "United States", "United Kingdom", "Canada", "Australia", "Germany", "France", "United Arab Emirates", 
+    "India", "Singapore", "Japan", "Switzerland", "Italy", "Spain", "Netherlands", "Qatar", "Thailand"
+].sort();
 
-    // ✅ YOUR GOOGLE SCRIPT URL
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzxiLT-Qdm5E7_j6NT132lnmnqCJZiD4fyh68HghY8lz0zCnNEPGXAexwcLZhU1FjMD/exec";
-
-    // --- STATE ---
-    const [service, setService] = useState<ServiceType>('flight_hotel');
-    const [budget, setBudget] = useState<BudgetType>('luxury');
+const FlightConcierge: React.FC = () => {
+    const [flightClass, setFlightClass] = useState<FlightClass>('business');
+    const [isClassOpen, setIsClassOpen] = useState(false);
+    const [includeStay, setIncludeStay] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Search States
+    const [originSearch, setOriginSearch] = useState('');
+    const [destSearch, setDestSearch] = useState('');
+    const [activeSearch, setActiveSearch] = useState<'origin' | 'dest' | null>(null);
+
     const [formData, setFormData] = useState({
-        name: '',
-        phone: '',
-        origin: '',
-        destination: '',
-        date: '',
-        requests: ''
+        name: '', phone: '', origin: '', destination: '', departureDate: '', arrivalDate: '', requests: ''
     });
 
-    // --- HANDLERS ---
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const flightClassOptions = [
+        { id: 'private', label: 'Private Jet / Charter' },
+        { id: 'first', label: 'First Class' },
+        { id: 'business', label: 'Business Class' },
+        { id: 'economy', label: 'Premium Economy' },
+    ];
+
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const selectCountry = (type: 'origin' | 'destination', country: string) => {
+        setFormData(prev => ({ ...prev, [type]: country }));
+        if (type === 'origin') setOriginSearch(country);
+        else setDestSearch(country);
+        setActiveSearch(null);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // 1. Prepare Form Data
-        const formPayload = new URLSearchParams();
-        formPayload.append('name', formData.name);
-        formPayload.append('phone', formData.phone);
-        formPayload.append('origin', formData.origin);
-        formPayload.append('destination', formData.destination);
-        formPayload.append('date', formData.date);
-        formPayload.append('requests', formData.requests);
-        formPayload.append('service', service);
-        formPayload.append('budget', budget);
+        const message = `*NEW BOOKING REQUEST*%0A` +
+            `--------------------------%0A` +
+            `*Name:* ${formData.name}%0A` +
+            `*Phone:* ${formData.phone}%0A` +
+            `*Route:* ${formData.origin} ✈️ ${formData.destination}%0A` +
+            `*Departure:* ${formData.departureDate}%0A` +
+            `*Arrival:* ${formData.arrivalDate}%0A` +
+            `*Class:* ${flightClass.toUpperCase()}%0A` +
+            `*Stay Included:* ${includeStay ? 'YES' : 'NO'}%0A` +
+            `*Requests:* ${formData.requests || 'None'}`;
 
-        try {
-            // 2. Send ONLY to Google Sheets
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: formPayload.toString(),
-            });
-
-            // 3. Success Message (No WhatsApp)
-            alert("✅ Request successfully sent to our Concierge Team!");
-
-            // Optional: Reset form after success
-            setFormData({
-                name: '', phone: '', origin: '', destination: '', date: '', requests: ''
-            });
-
-        } catch (error) {
-            console.error("Error saving to sheet", error);
-            alert("❌ There was an error sending your request. Please try again.");
-        } finally {
-            setIsSubmitting(false);
-        }
+        window.open(`https://wa.me/919087612111?text=${message}`, '_blank');
+        setIsSubmitting(false);
     };
 
     return (
-        <div className="min-h-screen bg-[#FAFAFA] text-slate-900 font-sans flex items-center justify-center p-0 lg:p-8">
-
+        <div className="min-h-screen bg-[#FDFDFD] font-sans flex items-center justify-center p-0 lg:p-12 selection:bg-blue-600/20 antialiased">
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full max-w-7xl bg-white shadow-[0_0_40px_-10px_rgba(0,0,0,0.05)] lg:rounded-3xl overflow-hidden flex flex-col lg:flex-row min-h-screen lg:min-h-[800px]"
+                className="w-full max-w-7xl bg-white shadow-[0_50px_100px_-30px_rgba(0,0,0,0.08)] lg:rounded-[3rem] overflow-hidden flex flex-col lg:flex-row min-h-screen lg:min-h-[850px] border border-slate-100"
             >
-
-                {/* 1. VISUAL SIDE (Left) */}
-                <div className="lg:w-5/12 relative hidden lg:block bg-slate-100">
-                    <img
-                        src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2676&auto=format&fit=crop"
-                        alt="Minimal Luxury"
-                        className="absolute inset-0 w-full h-full object-cover grayscale-[20%] contrast-[0.9]"
-                    />
-                    <div className="absolute inset-0 bg-black/20"></div>
-
-                    <div className="absolute bottom-12 left-12 text-white">
-                        <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4 text-[#D4AF37]">Private Access</p>
-                        <h1 className="text-5xl font-serif leading-tight">
-                            The World,<br />Curated.
-                        </h1>
+                {/* Visual Side */}
+                <div className="lg:w-5/12 relative hidden lg:block overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1464039397811-476f652a343b?q=80&w=2543&auto=format&fit=crop" className="absolute inset-0 w-full h-full
+                     object-cover grayscale-[20%]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-80" />
+                    <div className="absolute bottom-16 left-12">
+                        <h1 className="text-6xl font-extrabold tracking-tighter text-white leading-none uppercase italic mb-4">Direct<br /><span className="text-blue-500 not-italic font-light text-5xl">Routing.</span></h1>
                     </div>
                 </div>
 
-                {/* 2. FORM SIDE (Right) */}
-                <div className="lg:w-7/12 p-8 lg:p-20 flex flex-col justify-center relative">
-
-                    {/* Header */}
-                    <div className="mb-16">
-                        <span className="text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase block mb-3">Concierge Service</span>
-                        <h2 className="text-3xl lg:text-4xl font-serif text-slate-900">Design your journey.</h2>
-                        <div className="w-12 h-[2px] bg-[#D4AF37] mt-6"></div>
+                {/* Form Side */}
+                <div className="lg:w-7/12 p-8 lg:p-20 flex flex-col justify-center bg-white">
+                    <div className="mb-12">
+                        <div className="flex items-center gap-3 mb-4">
+                            <Zap className="w-4 h-4 text-blue-600 fill-blue-600" />
+                            <span className="text-[10px] font-black tracking-[0.5em] text-slate-400 uppercase">Flight Manifest Protocol</span>
+                        </div>
+                        <h2 className="text-4xl font-extrabold text-slate-900 tracking-tighter uppercase leading-none">Book <span className="italic font-light text-blue-600">Now.</span></h2>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-12">
+                    <form onSubmit={handleSubmit} className="space-y-10">
+                        {/* Passenger Info */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div className="relative">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Legal Name</label>
+                                <input name="name" required onChange={handleInput} className="w-full bg-transparent border-b border-slate-200 py-3 text-sm font-bold focus:border-blue-600 focus:outline-none transition-all" />
+                            </div>
+                            <div className="relative">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">WhatsApp Number</label>
+                                <input name="phone" required onChange={handleInput} className="w-full bg-transparent border-b border-slate-200 py-3 text-sm font-bold focus:border-blue-600 focus:outline-none transition-all" />
+                            </div>
+                        </div>
 
-                        {/* SERVICE SELECTION */}
-                        <div className="flex gap-8 border-b border-slate-100 pb-8">
-                            {[
-                                { id: 'flight_hotel', label: 'Full Journey' },
-                                { id: 'flight', label: 'Aviation' },
-                                { id: 'hotel', label: 'Stays' }
-                            ].map((item) => (
-                                <button
-                                    key={item.id}
-                                    type="button"
-                                    onClick={() => setService(item.id as ServiceType)}
-                                    className={`text-sm tracking-wide transition-all duration-300 relative ${service === item.id
-                                        ? 'text-slate-900 font-medium'
-                                        : 'text-slate-400 hover:text-slate-600'
-                                        }`}
-                                >
-                                    {item.label}
-                                    {service === item.id && (
-                                        <motion.div
-                                            layoutId="activeTab"
-                                            className="absolute -bottom-9 left-0 right-0 h-[2px] bg-[#D4AF37]"
-                                        />
+                        {/* Searchable Route Selection */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            {/* Origin Search */}
+                            <div className="relative">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Departing From</label>
+                                <div className="flex items-center border-b border-slate-200 focus-within:border-blue-600 transition-all">
+                                    <input 
+                                        value={originSearch}
+                                        onChange={(e) => {setOriginSearch(e.target.value); setActiveSearch('origin');}}
+                                        onFocus={() => setActiveSearch('origin')}
+                                        placeholder="Search country..."
+                                        className="w-full bg-transparent py-3 text-sm font-bold focus:outline-none"
+                                    />
+                                    <Navigation className="w-4 h-4 text-slate-300" />
+                                </div>
+                                <AnimatePresence>
+                                    {activeSearch === 'origin' && (
+                                        <motion.div initial={{opacity:0, y:5}} animate={{opacity:1, y:0}} exit={{opacity:0}} className="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-100 shadow-2xl rounded-2xl z-50 max-h-48 overflow-y-auto">
+                                            {COUNTRIES.filter(c => c.toLowerCase().includes(originSearch.toLowerCase())).map(c => (
+                                                <div key={c} onClick={() => selectCountry('origin', c)} className="px-6 py-3 text-xs font-bold uppercase hover:bg-blue-50 cursor-pointer">{c}</div>
+                                            ))}
+                                        </motion.div>
                                     )}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* INPUTS */}
-                        <div className="space-y-10">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                <div className="group relative">
-                                    <input
-                                        name="name"
-                                        value={formData.name}
-                                        required
-                                        onChange={handleInput}
-                                        placeholder=" "
-                                        disabled={isSubmitting}
-                                        className="peer w-full bg-transparent border-b border-slate-200 py-3 text-slate-900 placeholder-transparent focus:border-[#D4AF37] focus:outline-none transition-colors"
-                                    />
-                                    <label className="absolute left-0 -top-3.5 text-xs text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-[#D4AF37]">
-                                        Full Name
-                                    </label>
-                                </div>
-                                <div className="group relative">
-                                    <input
-                                        name="phone"
-                                        value={formData.phone}
-                                        required
-                                        onChange={handleInput}
-                                        placeholder=" "
-                                        disabled={isSubmitting}
-                                        className="peer w-full bg-transparent border-b border-slate-200 py-3 text-slate-900 placeholder-transparent focus:border-[#D4AF37] focus:outline-none transition-colors"
-                                    />
-                                    <label className="absolute left-0 -top-3.5 text-xs text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-[#D4AF37]">
-                                        WhatsApp Number
-                                    </label>
-                                </div>
+                                </AnimatePresence>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                <div className="group relative">
-                                    <input
-                                        name="origin"
-                                        value={formData.origin}
-                                        onChange={handleInput}
-                                        placeholder=" "
-                                        disabled={isSubmitting}
-                                        className="peer w-full bg-transparent border-b border-slate-200 py-3 text-slate-900 placeholder-transparent focus:border-[#D4AF37] focus:outline-none transition-colors"
+                            {/* Destination Search */}
+                            <div className="relative">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Arriving At</label>
+                                <div className="flex items-center border-b border-slate-200 focus-within:border-blue-600 transition-all">
+                                    <input 
+                                        value={destSearch}
+                                        onChange={(e) => {setDestSearch(e.target.value); setActiveSearch('dest');}}
+                                        onFocus={() => setActiveSearch('dest')}
+                                        placeholder="Search country..."
+                                        className="w-full bg-transparent py-3 text-sm font-bold focus:outline-none"
                                     />
-                                    <label className="absolute left-0 -top-3.5 text-xs text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-[#D4AF37]">
-                                        Origin
-                                    </label>
+                                    <PlaneTakeoff className="w-4 h-4 text-slate-300" />
                                 </div>
-                                <div className="group relative">
-                                    <input
-                                        name="destination"
-                                        value={formData.destination}
-                                        onChange={handleInput}
-                                        placeholder=" "
-                                        disabled={isSubmitting}
-                                        className="peer w-full bg-transparent border-b border-slate-200 py-3 text-slate-900 placeholder-transparent focus:border-[#D4AF37] focus:outline-none transition-colors"
-                                    />
-                                    <label className="absolute left-0 -top-3.5 text-xs text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-[#D4AF37]">
-                                        Destination
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
-                                <div className="group relative">
-                                    <label className="block text-xs text-slate-400 mb-2">Departure Date</label>
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        value={formData.date}
-                                        onChange={handleInput}
-                                        disabled={isSubmitting}
-                                        className="w-full bg-transparent border-b border-slate-200 py-2 text-slate-900 focus:border-[#D4AF37] focus:outline-none transition-colors font-sans"
-                                    />
-                                </div>
-                                <div className="group relative">
-                                    <label className="block text-xs text-slate-400 mb-2">Experience Tier</label>
-                                    <select
-                                        name="budget"
-                                        onChange={(e) => setBudget(e.target.value as BudgetType)}
-                                        value={budget}
-                                        disabled={isSubmitting}
-                                        className="w-full bg-transparent border-b border-slate-200 py-2 text-slate-900 focus:border-[#D4AF37] focus:outline-none transition-colors appearance-none cursor-pointer"
-                                    >
-                                        <option value="luxury">Luxury / First Class</option>
-                                        <option value="business">Business Class</option>
-                                        <option value="economy">Premium Economy</option>
-                                    </select>
-                                </div>
+                                <AnimatePresence>
+                                    {activeSearch === 'dest' && (
+                                        <motion.div initial={{opacity:0, y:5}} animate={{opacity:1, y:0}} exit={{opacity:0}} className="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-100 shadow-2xl rounded-2xl z-50 max-h-48 overflow-y-auto">
+                                            {COUNTRIES.filter(c => c.toLowerCase().includes(destSearch.toLowerCase())).map(c => (
+                                                <div key={c} onClick={() => selectCountry('destination', c)} className="px-6 py-3 text-xs font-bold uppercase hover:bg-blue-50 cursor-pointer">{c}</div>
+                                            ))}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         </div>
 
-                        <div>
-                            <textarea
-                                name="requests"
-                                value={formData.requests}
-                                onChange={handleInput}
-                                rows={2}
-                                disabled={isSubmitting}
-                                placeholder="Any specific requirements?"
-                                className="w-full bg-slate-50 border-0 rounded-none border-l-2 border-slate-200 p-4 text-sm text-slate-700 placeholder-slate-400 focus:border-[#D4AF37] focus:ring-0 focus:outline-none transition-colors resize-none"
-                            ></textarea>
+                        {/* Dates & Dropdown */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div className="relative">
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2"><Calendar className="w-3 h-3"/> Departure</label>
+                                <input type="date" name="departureDate" required onChange={handleInput} className="w-full bg-transparent border-b border-slate-200 py-2 text-sm font-bold focus:border-blue-600 focus:outline-none" />
+                            </div>
+                            <div className="relative">
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2"><Calendar className="w-3 h-3"/> Return</label>
+                                <input type="date" name="arrivalDate" required onChange={handleInput} className="w-full bg-transparent border-b border-slate-200 py-2 text-sm font-bold focus:border-blue-600 focus:outline-none" />
+                            </div>
                         </div>
 
-                        <div className="pt-4 flex items-center justify-between">
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="group flex items-center gap-4 text-slate-900 hover:text-[#D4AF37] transition-colors duration-300 disabled:opacity-50 disabled:cursor-wait"
-                            >
-                                <span className="font-serif text-lg italic">
-                                    {isSubmitting ? 'Sending Request...' : 'Submit to Concierge'}
-                                </span>
-                                <span className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-white transition-all duration-300">
-                                    <ArrowRight size={18} />
-                                </span>
+                        {/* Custom Dropdown */}
+                        <div className="relative">
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Cabin Preference</label>
+                            <div className="relative flex items-center justify-between border-b border-slate-200 py-3 cursor-pointer hover:border-slate-400" onClick={() => setIsClassOpen(!isClassOpen)}>
+                                <span className="text-sm font-bold text-slate-900 uppercase">{flightClassOptions.find(o => o.id === flightClass)?.label}</span>
+                                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isClassOpen ? 'rotate-180 text-blue-600' : ''}`} />
+                            </div>
+                            <AnimatePresence>
+                                {isClassOpen && (
+                                    <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:10}} className="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-100 shadow-2xl rounded-2xl z-50 overflow-hidden">
+                                        {flightClassOptions.map(o => (
+                                            <div key={o.id} onClick={() => {setFlightClass(o.id as FlightClass); setIsClassOpen(false);}} className={`flex items-center justify-between px-6 py-4 cursor-pointer text-xs font-bold uppercase tracking-widest hover:bg-slate-50 ${flightClass === o.id ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}>{o.label} {flightClass === o.id && <Check className="w-4 h-4" />}</div>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        <div className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-100" onClick={() => setIncludeStay(!includeStay)}>
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${includeStay ? 'bg-blue-600 text-white' : 'bg-white text-slate-400'}`}><BedDouble className="w-5 h-5" /></div>
+                            <div>
+                                <p className="text-[10px] font-black uppercase text-slate-900 tracking-widest leading-none">Hotel Stay</p>
+                                <p className="text-[9px] text-slate-400 font-bold mt-1 uppercase">{includeStay ? 'Include Accommodation' : 'Add Stays?'}</p>
+                            </div>
+                        </div>
+
+                        <div className="pt-6">
+                            <button type="submit" disabled={isSubmitting} className="w-full sm:w-auto group flex items-center justify-center gap-8 bg-slate-950 text-white pl-12 pr-4 py-4 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-xl shadow-slate-900/10">
+                                <span className="text-[11px] font-black uppercase tracking-[0.5em]">{isSubmitting ? 'Transmitting...' : 'Send to WhatsApp'}</span>
+                                <span className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-blue-600 transition-all duration-500"><ArrowRight size={20} /></span>
                             </button>
                         </div>
-
                     </form>
                 </div>
-
             </motion.div>
         </div>
     );
 };
 
-export default ConciergeBooking;
+export default FlightConcierge;

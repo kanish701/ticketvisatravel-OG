@@ -19,6 +19,7 @@ const Header = () => {
     { label: 'SERVICES', path: '/services' },
     { label: 'ABOUT US', path: '/about-us' },
     { label: 'CONTACT US', path: '/contact-us' },
+    { label: 'FLIGHT BOOKING', path: '/travel-services' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

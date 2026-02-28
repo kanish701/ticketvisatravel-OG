@@ -44,20 +44,20 @@ const ProcessTimeline = () => {
 
   return (
     <section ref={containerRef} className="py-24 bg-[#FDFCFB] relative overflow-hidden">
-      
+
       {/* Editorial Background Texture */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div className="h-full w-full" style={{ 
-          backgroundImage: `radial-gradient(#1e3a8a 1px, transparent 1px)`, 
-          backgroundSize: '40px 40px' 
+        <div className="h-full w-full" style={{
+          backgroundImage: `radial-gradient(#1e3a8a 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
         }} />
       </div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
-        
+
         {/* Header Section */}
         <div className="text-center mb-24">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="flex items-center justify-center gap-3 mb-6"
@@ -76,12 +76,12 @@ const ProcessTimeline = () => {
 
         {/* Timeline Implementation */}
         <div className="relative">
-          
+
           {/* Central Vertical Line (The "Spine") */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px] bg-slate-100">
-            <motion.div 
-              style={{ height: lineHeight }} 
-              className="w-full bg-blue-900 origin-top shadow-[0_0_15px_rgba(30,58,138,0.5)]" 
+            <motion.div
+              style={{ height: lineHeight }}
+              className="w-full bg-blue-900 origin-top shadow-[0_0_15px_rgba(30,58,138,0.5)]"
             />
           </div>
 
@@ -90,7 +90,7 @@ const ProcessTimeline = () => {
               const isEven = idx % 2 === 0;
               return (
                 <div key={step.id} className="relative flex items-center justify-between">
-                  
+
                   {/* Left Content (or Spacer) */}
                   <div className={`w-[42%] ${isEven ? 'text-right' : 'order-last text-left'}`}>
                     <motion.div
@@ -113,7 +113,7 @@ const ProcessTimeline = () => {
 
                   {/* Central Node (The Marker) */}
                   <div className="relative z-10">
-                    <motion.div 
+                    <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
@@ -134,7 +134,7 @@ const ProcessTimeline = () => {
         </div>
 
         {/* Professional Footer Trust-Bar */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           className="mt-32 p-8 bg-blue-900 text-white flex flex-col md:flex-row items-center justify-between gap-6"
@@ -146,9 +146,12 @@ const ProcessTimeline = () => {
               <p className="text-sm font-serif italic">Every application is handled within a secure diplomatic framework.</p>
             </div>
           </div>
-          <button className="px-8 py-3 bg-white text-blue-900 text-xs font-bold uppercase tracking-widest hover:bg-blue-50 transition-colors">
+          <a
+            href="tel:9087612111"
+            className="px-8 py-3 bg-white text-blue-900 text-xs font-bold uppercase tracking-widest hover:bg-blue-50 transition-colors inline-block cursor-pointer"
+          >
             Consult a Specialist
-          </button>
+          </a>
         </motion.div>
 
       </div>

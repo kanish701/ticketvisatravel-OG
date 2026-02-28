@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ShieldCheck, Lock, Award, Clock, ArrowRight, MessageCircle, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 
 const guarantees = [
@@ -32,19 +33,19 @@ const guarantees = [
 const GuaranteeSection = () => {
   return (
     <section className="py-24 bg-[#FDFCFB] relative overflow-hidden border-y border-slate-100">
-      
+
       {/* Background Cartographic Texture */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-        <div className="h-full w-full" style={{ 
+        <div className="h-full w-full" style={{
           backgroundImage: `url("https://www.transparenttextures.com/patterns/graphy.png")`,
         }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
+
         {/* Editorial Header */}
         <div className="text-center mb-24">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="flex items-center justify-center gap-3 mb-6"
@@ -74,12 +75,12 @@ const GuaranteeSection = () => {
             >
               {/* Internal Framing */}
               <div className="absolute inset-0 bg-blue-900/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               <div className="relative z-10 space-y-8">
                 <div className="w-12 h-12 flex items-center justify-center text-blue-900 bg-slate-50 group-hover:bg-blue-900 group-hover:text-white transition-all duration-500 rounded-sm">
                   {item.icon}
                 </div>
-                
+
                 <div className="space-y-4">
                   <h3 className="text-lg font-bold text-slate-900 uppercase tracking-widest">
                     {item.title}
@@ -88,7 +89,7 @@ const GuaranteeSection = () => {
                     {item.description}
                   </p>
                 </div>
-                
+
                 {/* Visual Anchor */}
                 <div className="h-0.5 w-8 bg-blue-900/10 group-hover:w-full transition-all duration-700" />
               </div>
@@ -104,7 +105,7 @@ const GuaranteeSection = () => {
         >
           <div className="border border-blue-800/50 p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left relative">
             <Globe className="absolute -top-10 -right-10 w-64 h-64 text-white/5 pointer-events-none" />
-            
+
             <div className="relative z-10 max-w-xl">
               <h3 className="text-3xl md:text-4xl font-serif italic text-white mb-4">
                 Begin Your Application Process
@@ -115,12 +116,18 @@ const GuaranteeSection = () => {
             </div>
 
             <div className="relative z-10 flex flex-col sm:flex-row gap-6 w-full lg:w-auto">
-              <button className="bg-white text-blue-900 px-10 py-5 text-xs font-bold uppercase tracking-[0.3em] hover:bg-blue-50 transition-all flex items-center justify-center gap-3">
+              <Link
+                to="/application-portal"
+                className="bg-white text-blue-900 px-10 py-5 text-xs font-bold uppercase tracking-[0.3em] hover:bg-blue-50 transition-all flex items-center justify-center gap-3 cursor-pointer"
+              >
                 Apply Now <ArrowRight className="w-4 h-4" />
-              </button>
-              <button className="border border-white/20 text-white px-10 py-5 text-xs font-bold uppercase tracking-[0.3em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+              </Link>
+              <a
+                href="tel:9087612111"
+                className="border border-white/20 text-white px-10 py-5 text-xs font-bold uppercase tracking-[0.3em] hover:bg-white/10 transition-all flex items-center justify-center gap-3 cursor-pointer"
+              >
                 <MessageCircle className="w-4 h-4" /> Consult Specialist
-              </button>
+              </a>
             </div>
           </div>
         </motion.div>
