@@ -141,7 +141,7 @@ const ContactUs = () => {
                     <div className="lg:col-span-5 space-y-12">
                         <div className="bg-white border border-slate-100 p-2 shadow-2xl h-[450px]">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.656514101487!2d77.06014467586524!3d11.064372553818314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8f99e4695027b%3A0xe9650d5071191060!2sKathir%20IT%20Park!5e0!3m2!1sen!2sin!4v1709400000000!5m2!1sen!2sin"
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d244.7250801487355!2d77.08306379688865!3d11.068490617057158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1772292824090!5m2!1sen!2sin"
                                 width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                                 className="grayscale contrast-125 opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
                             ></iframe>
