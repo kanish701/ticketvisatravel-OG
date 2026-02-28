@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShieldCheck, Globe, Zap } from 'lucide-react';
 
-// --- IMPORTS: Pointing to your 'components' folder ---
+// --- Sub-Components ---
 import PersonalInfoForm from './components/PersonalInfoForm';
 import TravelInfoForm from './components/TravelInfoForm';
 import DocumentUploadForm from './components/DocumentUploadForm';
@@ -8,24 +10,17 @@ import AdditionalInfoForm from './components/AdditionalInfoForm';
 import ProgressTracker from './components/ProgressTracker';
 import SuccessModal from './components/SuccessModal';
 
-// Importing types from your global types folder (going up 2 levels to src/types)
+// --- Types ---
 import { ApplicationFormData, ValidationError, Country } from '../../types';
 
-// --- CONFIGURATION ---
-// 1. Paste the Web App URL you got from Google Apps Script Deploy
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6b1PFaMnl6A81MXDvtCQIn9kbbuDyPrMmzy_qIFXvEZKYemhXHyMSAiYB1_QpshjD/exec";
-
-// 2. Your WhatsApp Number (No + symbol)
 const WHATSAPP_NUMBER = "919087612111";
 
 const ApplicationPortal = () => {
-  // 1. STATE MANAGEMENT
   const [currentStep, setCurrentStep] = useState<string>('personal');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [errors, setErrors] = useState<ValidationError[]>([]);
 
-  // The Master Data Object
   const [formData, setFormData] = useState<ApplicationFormData>({
     personalInfo: {
       firstName: '', lastName: '', email: '', phone: '',
@@ -41,42 +36,63 @@ const ApplicationPortal = () => {
     }
   });
 
-  // Mock Data (You can move this to a separate data file later)
+  // --- Country Data Logic ---
   const countries: Country[] = [
     {
       id: 'dubai', name: 'Dubai (UAE)', code: 'AE', flag: '🇦🇪',
-      heroImage: '', heroImageAlt: '', tagline: '', description: '',
-      processingTime: '2-3 Days', successRate: 99, pricing: { embassyFee: '0', serviceFee: 0, totalFee: 0, currency: 'USD', refundPolicy: '' },
-      requirements: [], timeline: [], testimonials: [], faqs: [], embassyInfo: { name: '', address: '', phone: '', email: '', website: '', workingHours: '', latitude: 0, longitude: 0 },
-      recentUpdates: [], similarDestinations: [], stats: { totalApplications: 0, averageProcessingDays: 0, approvalRate: 0, rejectionReasons: [] },
-      visaTypes: [{ id: 'tourist-30', name: '30 Days Tourist', description: '', duration: '', price: 150, processingTime: '2-3 Days', icon: '' }]
+      heroImage: '', heroImageAlt: '', tagline: 'Premium Travel', description: 'Dubai entry permit',
+      visaTypes: [{
+        id: 'tourist-30',
+        name: '30 Days Tourist',
+        price: 150,
+        processingTime: '2-3 Days',
+        description: 'Standard tourist visa for Dubai',
+        duration: '30 Days',
+        icon: 'Plane'
+      }],
+      processingTime: '2-3 Days',
+      successRate: 99,
+      pricing: { embassyFee: '0', serviceFee: 0, totalFee: 150, currency: 'USD', refundPolicy: 'Non-refundable' },
+      requirements: [],
+      timeline: [],
+      testimonials: [],
+      faqs: [],
+      embassyInfo: { name: '', address: '', phone: '', email: '', website: '', workingHours: '', latitude: 0, longitude: 0 },
+      recentUpdates: [],
+      similarDestinations: [],
+      stats: { totalApplications: 0, averageProcessingDays: 0, approvalRate: 0, rejectionReasons: [] }
     },
     {
       id: 'schengen', name: 'Schengen Area', code: 'EU', flag: '🇪🇺',
-      heroImage: '', heroImageAlt: '', tagline: '', description: '',
-      processingTime: '15 Days', successRate: 95, pricing: { embassyFee: '0', serviceFee: 0, totalFee: 0, currency: 'EUR', refundPolicy: '' },
-      requirements: [], timeline: [], testimonials: [], faqs: [], embassyInfo: { name: '', address: '', phone: '', email: '', website: '', workingHours: '', latitude: 0, longitude: 0 },
-      recentUpdates: [], similarDestinations: [], stats: { totalApplications: 0, averageProcessingDays: 0, approvalRate: 0, rejectionReasons: [] },
-      visaTypes: [{ id: 'business', name: 'Business Visa', description: '', duration: '', price: 200, processingTime: '15 Days', icon: '' }]
+      heroImage: '', heroImageAlt: '', tagline: 'European Gateway', description: 'Schengen short stay visa',
+      visaTypes: [{
+        id: 'business',
+        name: 'Business Visa',
+        price: 200,
+        processingTime: '15 Days',
+        description: 'Business visa for Schengen countries',
+        duration: '90 Days',
+        icon: 'Briefcase'
+      }],
+      processingTime: '15 Days',
+      successRate: 95,
+      pricing: { embassyFee: '80', serviceFee: 0, totalFee: 200, currency: 'EUR', refundPolicy: 'Non-refundable' },
+      requirements: [],
+      timeline: [],
+      testimonials: [],
+      faqs: [],
+      embassyInfo: { name: '', address: '', phone: '', email: '', website: '', workingHours: '', latitude: 0, longitude: 0 },
+      recentUpdates: [],
+      similarDestinations: [],
+      stats: { totalApplications: 0, averageProcessingDays: 0, approvalRate: 0, rejectionReasons: [] }
     },
   ];
 
-  // 2. HELPER FUNCTIONS
   const updateFormData = (section: keyof ApplicationFormData, data: any) => {
     setFormData(prev => ({ ...prev, [section]: data }));
   };
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
-  };
-
   const handleDocumentUpload = async (reqId: string, file: File) => {
-    const base64String = await convertToBase64(file);
     const newDoc = {
       id: Math.random().toString(36).substr(2, 9),
       requirementId: reqId,
@@ -84,157 +100,194 @@ const ApplicationPortal = () => {
       fileSize: file.size,
       fileType: file.type,
       url: URL.createObjectURL(file),
-      base64: base64String, // Storing for Google Sheets upload
       uploadedAt: new Date().toISOString(),
       status: 'pending' as const
     };
-
     setFormData(prev => ({
       ...prev,
       documents: [...prev.documents.filter(d => d.requirementId !== reqId), newDoc]
     }));
   };
 
-  const handleDocumentRemove = (docId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      documents: prev.documents.filter(d => d.id !== docId)
-    }));
-  };
-
-  // 3. SUBMISSION LOGIC (FIXED WHATSAPP)
   const handleFinalSubmit = async () => {
     setIsSubmitting(true);
 
-    // --- FIX: Prepare Message & Open WhatsApp FIRST (Before Async Fetch) ---
-    const message = `
-*New Visa Application*
------------------------------
-*Name:* ${formData.personalInfo.firstName} ${formData.personalInfo.lastName}
-*Passport:* ${formData.personalInfo.passportNumber}
-*Dest:* ${formData.travelInfo.countryId}
-*Visa:* ${formData.travelInfo.visaTypeId}
------------------------------
-*Status:* Application Data & Documents Sent.
-    `.trim();
+    // 1. CONSTRUCT COMPREHENSIVE WHATSAPP MANIFEST
+    const p = formData.personalInfo;
+    const t = formData.travelInfo;
+    const a = formData.additionalInfo;
+    const d = formData.documents;
 
-    // Open WhatsApp immediately so the browser doesn't block it as a pop-up
+    const message = `
+*🚀 NEW VISA APPLICATION DOSSIER*
+---------------------------------------
+*IDENTIFICATION:*
+• *Name:* ${p.firstName.toUpperCase()} ${p.lastName.toUpperCase()}
+• *Email:* ${p.email}
+• *Phone:* ${p.phone}
+• *DOB:* ${p.dateOfBirth}
+• *Nationality:* ${p.nationality.toUpperCase()}
+• *Passport:* ${p.passportNumber}
+• *Expiry:* ${p.passportExpiry}
+
+*ROUTE DETAILS:*
+• *Destination:* ${t.countryId.toUpperCase()}
+• *Visa Type:* ${t.visaTypeId}
+• *Travel Date:* ${t.travelDate}
+• *Return Date:* ${t.returnDate}
+• *Purpose:* ${t.purpose.toUpperCase()}
+
+*SECURITY & BACKGROUND:*
+• *Prev. Visa:* ${a.previousVisas ? 'YES' : 'NO'}
+• *Criminal Record:* ${a.criminalRecord ? 'YES' : 'NO'}
+• *Medical Case:* ${a.medicalConditions ? 'YES' : 'NO'}
+• *Emergency Contact:* ${a.emergencyContact} (${a.emergencyPhone})
+
+*DOSSIER DOCUMENTS:*
+${d.map((doc, i) => `${i + 1}. ${doc.fileName}`).join('\n')}
+---------------------------------------
+*STATUS:* MANIFEST COMPLETED
+_Please review the attached dossier for priority processing._
+        `.trim();
+
+    // 2. OPEN WHATSAPP
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
-    try {
-      // Step A: Send to Google Sheets (Backend)
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(formData),
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      // Step B: Show Success
-      setShowSuccess(true);
-
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Submission failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // 3. SHOW SUCCESS MODAL
+    setShowSuccess(true);
+    setIsSubmitting(false);
   };
 
-  // 4. NAVIGATION CONFIG
   const steps = [
-    { id: 'personal', title: 'Personal Info' },
-    { id: 'travel', title: 'Travel Details' },
-    { id: 'documents', title: 'Documents' },
-    { id: 'additional', title: 'Final Review' },
+    { id: 'personal', title: 'Identity', desc: 'Legal Manifest' },
+    { id: 'travel', title: 'Travel', desc: 'Route Details' },
+    { id: 'documents', title: 'Dossier', desc: 'File Upload' },
+    { id: 'additional', title: 'Finalize', desc: 'Review' },
   ];
 
   const currentStepIndex = steps.findIndex(s => s.id === currentStep);
-  const progressPercentage = ((currentStepIndex) / (steps.length - 1)) * 100;
+  const progressPercentage = ((currentStepIndex + 1) / steps.length) * 100;
 
-  // 5. RENDER
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 font-sans text-slate-900">
-      <div className="max-w-4xl mx-auto space-y-8">
-
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-serif font-bold text-slate-900">Visa Application Portal</h1>
-          <p className="text-slate-500">Complete the steps below to secure your travel permit.</p>
-        </div>
-
-        {/* --- Progress Tracker --- */}
-        <ProgressTracker
-          sections={steps.map(s => ({
-            id: s.id,
-            title: s.title,
-            fields: 10,
-            completedFields: currentStepIndex > steps.findIndex(x => x.id === s.id) ? 10 : 0,
-            completed: currentStepIndex > steps.findIndex(x => x.id === s.id),
-            description: "Step details",
-            icon: "Check"
-          }))}
-          currentSection={currentStep}
-          completionPercentage={Math.round(progressPercentage)}
-          onSectionClick={(id) => { /* Optional: Add logic to jump steps if allowed */ }}
+    <div className="min-h-screen bg-[#FDFDFD] py-20 px-4 font-sans antialiased text-slate-900 selection:bg-blue-600/10">
+      {/* Background Branding Elements */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-slate-100 overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${progressPercentage}%` }}
+          className="h-full bg-blue-600"
         />
+      </div>
 
-        {/* --- Main Form Container --- */}
-        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-200">
+      <div className="max-w-6xl mx-auto">
+        <header className="mb-20 text-center space-y-4">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Zap className="w-5 h-5 text-blue-600 fill-blue-600" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">Aviation Elite Protocol</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-slate-950 tracking-tighter uppercase italic leading-none">
+            Visa <span className="text-blue-600 not-italic font-light">Navigator.</span>
+          </h1>
+          <p className="text-slate-400 font-medium max-w-lg mx-auto italic">
+            Initialize your global mobility dossier via our secure transmission desk.
+          </p>
+        </header>
 
-          {currentStep === 'personal' && (
-            <PersonalInfoForm
-              formData={formData.personalInfo}
-              onChange={(data) => updateFormData('personalInfo', data)}
-              onNext={() => setCurrentStep('travel')}
-              errors={errors}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* Left: Progress Manifest */}
+          <div className="lg:col-span-4 lg:sticky lg:top-32">
+            <ProgressTracker
+              sections={steps.map((s, i) => ({
+                id: s.id,
+                title: s.title,
+                description: s.desc,
+                completed: currentStepIndex > i,
+                fields: 10,
+                completedFields: currentStepIndex > i ? 10 : 0,
+                icon: "Check"
+              }))}
+              currentSection={currentStep}
+              completionPercentage={Math.round(progressPercentage)}
+              onSectionClick={(id) => setCurrentStep(id)}
             />
-          )}
 
-          {currentStep === 'travel' && (
-            <TravelInfoForm
-              formData={formData.travelInfo}
-              countries={countries}
-              onChange={(data) => updateFormData('travelInfo', data)}
-              onNext={() => setCurrentStep('documents')}
-              onBack={() => setCurrentStep('personal')}
-              errors={errors}
-            />
-          )}
+            <div className="mt-10 p-8 rounded-[2rem] bg-slate-50 border border-slate-100 space-y-4">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="w-4 h-4 text-blue-600" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-900">Security Note</span>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed italic">
+                Once submitted, your data is routed directly to our 24/7 Priority Support Desk via WhatsApp for immediate processing.
+              </p>
+            </div>
+          </div>
 
-          {currentStep === 'documents' && (
-            <DocumentUploadForm
-              requirements={[
-                { id: 'passport_front', name: 'Passport Front', description: 'Photo page', format: ['jpg', 'pdf'], maxSize: 5000000, required: true, icon: 'FileText' },
-                { id: 'photo', name: 'Passport Photo', description: 'White background', format: ['jpg'], maxSize: 2000000, required: true, icon: 'User' }
-              ]}
-              uploadedDocuments={formData.documents}
-              onUpload={handleDocumentUpload}
-              onRemove={handleDocumentRemove}
-              onNext={() => setCurrentStep('additional')}
-              onBack={() => setCurrentStep('travel')}
-              errors={errors}
-            />
-          )}
+          {/* Right: Active Filing Desk */}
+          <main className="lg:col-span-8 bg-white p-8 md:p-16 rounded-[3rem] border border-slate-100 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.04)] relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {currentStep === 'personal' && (
+                  <PersonalInfoForm
+                    formData={formData.personalInfo}
+                    onChange={(data) => updateFormData('personalInfo', data)}
+                    onNext={() => setCurrentStep('travel')}
+                    errors={errors}
+                  />
+                )}
 
-          {currentStep === 'additional' && (
-            <AdditionalInfoForm
-              formData={formData.additionalInfo}
-              onChange={(data) => updateFormData('additionalInfo', data)}
-              onSubmit={handleFinalSubmit}
-              onBack={() => setCurrentStep('documents')}
-              isSubmitting={isSubmitting}
-              errors={errors}
-            />
-          )}
+                {currentStep === 'travel' && (
+                  <TravelInfoForm
+                    formData={formData.travelInfo}
+                    countries={countries}
+                    onChange={(data) => updateFormData('travelInfo', data)}
+                    onNext={() => setCurrentStep('documents')}
+                    onBack={() => setCurrentStep('personal')}
+                    errors={errors}
+                  />
+                )}
+
+                {currentStep === 'documents' && (
+                  <DocumentUploadForm
+                    requirements={[
+                      { id: 'passport_front', name: 'Passport Front', description: 'Photo page clarity', format: ['jpg', 'pdf'], maxSize: 5000000, required: true, icon: 'FileText' },
+                      { id: 'photo', name: 'Identity Photo', description: 'White background', format: ['jpg'], maxSize: 2000000, required: true, icon: 'User' }
+                    ]}
+                    uploadedDocuments={formData.documents}
+                    onUpload={handleDocumentUpload}
+                    onRemove={(id) => setFormData(prev => ({ ...prev, documents: prev.documents.filter(d => d.id !== id) }))}
+                    onNext={() => setCurrentStep('additional')}
+                    onBack={() => setCurrentStep('travel')}
+                    errors={errors}
+                  />
+                )}
+
+                {currentStep === 'additional' && (
+                  <AdditionalInfoForm
+                    formData={formData.additionalInfo}
+                    onChange={(data) => updateFormData('additionalInfo', data)}
+                    onSubmit={handleFinalSubmit}
+                    onBack={() => setCurrentStep('documents')}
+                    isSubmitting={isSubmitting}
+                    errors={errors}
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </main>
         </div>
       </div>
 
       <SuccessModal
         isOpen={showSuccess}
-        applicationId={`VS-${Date.now().toString().slice(-6)}`}
+        applicationId={`VN-${Date.now().toString().slice(-6)}`}
         onClose={() => setShowSuccess(false)}
-        onTrackApplication={() => console.log("Tracking...")}
       />
     </div>
   );

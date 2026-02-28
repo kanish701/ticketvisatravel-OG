@@ -53,11 +53,11 @@ const SimilarDestinations = ({ destinations }: SimilarDestinationsProps) => {
          
          {/* A. Animated Gradient Blobs (The "Light") */}
          <div className="absolute inset-0 opacity-60">
-            {/* Gold/Warm Blob */}
+            {/* blue-200/Warm Blob */}
             <motion.div
                variants={blobVariants}
                animate="animate"
-               className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] bg-brand-gold/30 rounded-full blur-[120px] mix-blend-multiply"
+               className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] bg-blue-200/30 rounded-full blur-[120px] mix-blend-multiply"
             />
             {/* Cool/Blue Blob (Offset) */}
             <motion.div
@@ -118,7 +118,7 @@ const SimilarDestinations = ({ destinations }: SimilarDestinationsProps) => {
             viewport={{ once: true }}
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-white/60 backdrop-blur-sm border border-slate-200 shadow-sm">
-               <Icon name="Map" size={14} className="text-brand-gold" />
+               <Icon name="Map" size={14} className="text-blue-200" />
                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-midnight">Global Terrain</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-brand-midnight mb-4 tracking-tight">
@@ -163,7 +163,7 @@ const SimilarDestinations = ({ destinations }: SimilarDestinationsProps) => {
                   {/* Like Button */}
                   <div 
                     onClick={(e) => { e.stopPropagation(); }}
-                    className="w-8 h-8 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-gold hover:text-brand-midnight transition-colors"
+                    className="w-8 h-8 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-blue-200 hover:text-brand-midnight transition-colors"
                   >
                      <Icon name="Heart" size={14} />
                   </div>
@@ -181,7 +181,7 @@ const SimilarDestinations = ({ destinations }: SimilarDestinationsProps) => {
                   <div className="mb-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                      <p className="text-slate-300 text-[10px] font-bold uppercase tracking-widest mb-1">Estimated Cost</p>
                      <div className="flex items-baseline text-white">
-                        <span className="text-sm text-brand-gold mr-1">$</span>
+                        <span className="text-sm text-brand-blue-200 mr-1">$</span>
                         <span className="text-3xl font-black">{destination.price}</span>
                      </div>
                   </div>
@@ -191,18 +191,18 @@ const SimilarDestinations = ({ destinations }: SimilarDestinationsProps) => {
                      <div className="overflow-hidden">
                         <div className="pt-2 pb-2 flex items-center justify-between border-t border-white/20 mb-3">
                            <div className="flex items-center gap-2 text-white/80">
-                              <Icon name="Clock" size={14} className="text-brand-gold" />
+                              <Icon name="Clock" size={14} className="text-brand-blue-200" />
                               <span className="text-xs font-medium">{destination.processingTime}</span>
                            </div>
                            <div className="flex items-center gap-2 text-white/80">
-                              <Icon name="FileText" size={14} className="text-brand-gold" />
+                              <Icon name="FileText" size={14} className="text-brand-blue-200" />
                               <span className="text-xs font-medium">Tourist</span>
                            </div>
                         </div>
 
                         {/* View Button */}
                         <button 
-                           className="w-full py-3 rounded-xl bg-white text-brand-midnight font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 hover:bg-brand-gold transition-colors shadow-lg"
+                           className="w-full py-3 rounded-xl bg-white text-brand-midnight font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 hover:bg-brand-blue-200 transition-colors shadow-lg"
                            onClick={(e) => {
                               e.stopPropagation();
                               handleDestinationClick(destination.id);

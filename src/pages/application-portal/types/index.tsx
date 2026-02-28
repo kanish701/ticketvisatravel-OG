@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { countriesData } from '../../../data/CountriesData';
 
+// UI Components
 import Button from '../../../components/ui/Button';
 import Icon from '../../../components/AppIcon';
 import ProgressTracker from '../components/ProgressTracker';
@@ -10,14 +12,19 @@ import TravelInfoForm from '../components/TravelInfoForm';
 import DocumentUploadForm from '../components/DocumentUploadForm';
 import AdditionalInfoForm from '../components/AdditionalInfoForm';
 import SuccessModal from '../components/SuccessModal';
+
+// Types
 import {
   ApplicationFormData,
   FormSection,
   ValidationError,
-  Country,
   DocumentRequirement,
   UploadedDocument
 } from '../../../types';
+
+// Configuration
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6b1PFaMnl6A81MXDvtCQIn9kbbuDyPrMmzy_qIFXvEZKYemhXHyMSAiYB1_QpshjD/exec";
+const WHATSAPP_NUMBER = "919087612111";
 
 const ApplicationPortal = () => {
   const navigate = useNavigate();
@@ -25,126 +32,25 @@ const ApplicationPortal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [applicationId, setApplicationId] = useState('');
-
-  const [formData, setFormData] = useState<ApplicationFormData>({
-    personalInfo: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      dateOfBirth: '',
-      nationality: '',
-      passportNumber: '',
-      passportExpiry: ''
-    },
-    travelInfo: {
-      countryId: '',
-      visaTypeId: '',
-      travelDate: '',
-      returnDate: '',
-      purpose: ''
-    },
-    documents: [],
-    additionalInfo: {
-      previousVisas: false,
-      criminalRecord: false,
-      medicalConditions: false,
-      emergencyContact: '',
-      emergencyPhone: ''
-    }
-  });
-
   const [errors, setErrors] = useState<ValidationError[]>([]);
 
-  /* Use global countries data instead of local mock */
-  const countries = countriesData;
+  const [formData, setFormData] = useState<ApplicationFormData>({
+    personalInfo: { firstName: '', lastName: '', email: '', phone: '', dateOfBirth: '', nationality: '', passportNumber: '', passportExpiry: '' },
+    travelInfo: { countryId: '', visaTypeId: '', travelDate: '', returnDate: '', purpose: '' },
+    documents: [],
+    additionalInfo: { previousVisas: false, criminalRecord: false, medicalConditions: false, emergencyContact: '', emergencyPhone: '' }
+  });
 
   const documentRequirements: DocumentRequirement[] = [
-    {
-      id: 'passport',
-      name: 'Passport Copy',
-      description: 'Clear copy of your passport bio page showing photo and details',
-      required: true,
-      format: ['pdf', 'jpg', 'png'],
-      maxSize: 10485760,
-      icon: 'FileText'
-    },
-    {
-      id: 'photo',
-      name: 'Passport Photo',
-      description: 'Recent passport-sized photograph with white background',
-      required: true,
-      format: ['jpg', 'png'],
-      maxSize: 5242880,
-      icon: 'Camera'
-    },
-    {
-      id: 'bank-statement',
-      name: 'Bank Statement',
-      description: 'Last 3 months bank statements showing sufficient funds',
-      required: true,
-      format: ['pdf'],
-      maxSize: 10485760,
-      icon: 'DollarSign'
-    },
-    {
-      id: 'employment',
-      name: 'Employment Letter',
-      description: 'Letter from employer confirming employment and leave approval',
-      required: false,
-      format: ['pdf'],
-      maxSize: 5242880,
-      icon: 'Briefcase'
-    },
-    {
-      id: 'itinerary',
-      name: 'Travel Itinerary',
-      description: 'Flight bookings and accommodation reservations',
-      required: false,
-      format: ['pdf'],
-      maxSize: 5242880,
-      icon: 'MapPin'
-    }
+    { id: 'passport', name: 'Passport Copy', description: 'Bio page (photo & details)', required: true, format: ['pdf', 'jpg'], maxSize: 10485760, icon: 'FileText' },
+    { id: 'photo', name: 'Passport Photo', description: 'Recent, white background', required: true, format: ['jpg'], maxSize: 5242880, icon: 'Camera' }
   ];
 
-
   const [sections, setSections] = useState<FormSection[]>([
-    {
-      id: 'personal',
-      title: 'Personal Information',
-      description: 'Basic details and passport information',
-      icon: 'User',
-      completed: false,
-      fields: 8,
-      completedFields: 0
-    },
-    {
-      id: 'travel',
-      title: 'Travel Details',
-      description: 'Destination and visa type selection',
-      icon: 'Plane',
-      completed: false,
-      fields: 5,
-      completedFields: 0
-    },
-    {
-      id: 'documents',
-      title: 'Document Upload',
-      description: 'Required documents and certificates',
-      icon: 'Upload',
-      completed: false,
-      fields: 3,
-      completedFields: 0
-    },
-    {
-      id: 'additional',
-      title: 'Additional Information',
-      description: 'Emergency contacts and declarations',
-      icon: 'FileCheck',
-      completed: false,
-      fields: 2,
-      completedFields: 0
-    }
+    { id: 'personal', title: 'Identity', description: 'Legal Manifest', icon: 'User', completed: false, fields: 8, completedFields: 0 },
+    { id: 'travel', title: 'Travel Info', description: 'Travel Protocol', icon: 'Plane', completed: false, fields: 5, completedFields: 0 },
+    { id: 'documents', title: 'Documents', description: 'File Transmission', icon: 'Upload', completed: false, fields: 2, completedFields: 0 },
+    { id: 'additional', title: 'Additional Info', description: 'Final Declaration', icon: 'FileCheck', completed: false, fields: 2, completedFields: 0 }
   ]);
 
   useEffect(() => {
@@ -152,121 +58,23 @@ const ApplicationPortal = () => {
   }, [formData]);
 
   const updateSectionProgress = () => {
-    const updatedSections = [...sections];
-
-    const personalFields = Object.values(formData.personalInfo).filter(v => v !== '').length;
-    updatedSections[0].completedFields = personalFields;
-    updatedSections[0].completed = personalFields === 8;
-
-    const travelFields = Object.values(formData.travelInfo).filter(v => v !== '').length;
-    updatedSections[1].completedFields = travelFields;
-    updatedSections[1].completed = travelFields === 5;
-
-    const requiredDocs = documentRequirements.filter(d => d.required).length;
-    const uploadedRequiredDocs = formData.documents.filter(d =>
-      documentRequirements.find(r => r.id === d.requirementId && r.required)
-    ).length;
-    updatedSections[2].completedFields = uploadedRequiredDocs;
-    updatedSections[2].completed = uploadedRequiredDocs === requiredDocs;
-
-    const additionalFields = [
-      formData.additionalInfo.emergencyContact,
-      formData.additionalInfo.emergencyPhone
-    ].filter(v => v !== '').length;
-    updatedSections[3].completedFields = additionalFields;
-    updatedSections[3].completed = additionalFields === 2;
-
-    setSections(updatedSections);
+    const updated = [...sections];
+    updated[0].completedFields = Object.values(formData.personalInfo).filter(v => v !== '').length;
+    updated[0].completed = updated[0].completedFields === 8;
+    updated[1].completedFields = Object.values(formData.travelInfo).filter(v => v !== '').length;
+    updated[1].completed = updated[1].completedFields === 5;
+    const requiredIds = documentRequirements.filter(r => r.required).map(r => r.id);
+    updated[2].completedFields = formData.documents.filter(d => requiredIds.includes(d.requirementId)).length;
+    updated[2].completed = updated[2].completedFields === requiredIds.length;
+    updated[3].completedFields = [formData.additionalInfo.emergencyContact, formData.additionalInfo.emergencyPhone].filter(v => v !== '').length;
+    updated[3].completed = updated[3].completedFields === 2;
+    setSections(updated);
   };
 
   const calculateProgress = () => {
-    const totalFields = sections.reduce((sum, s) => sum + s.fields, 0);
-    const completedFields = sections.reduce((sum, s) => sum + s.completedFields, 0);
-    return Math.round((completedFields / totalFields) * 100);
-  };
-
-  const validatePersonalInfo = (): boolean => {
-    const newErrors: ValidationError[] = [];
-    const { personalInfo } = formData;
-
-    if (!personalInfo.firstName) newErrors.push({ field: 'firstName', message: 'First name is required' });
-    if (!personalInfo.lastName) newErrors.push({ field: 'lastName', message: 'Last name is required' });
-    if (!personalInfo.email) newErrors.push({ field: 'email', message: 'Email is required' });
-    if (!personalInfo.phone) newErrors.push({ field: 'phone', message: 'Phone number is required' });
-    if (!personalInfo.dateOfBirth) newErrors.push({ field: 'dateOfBirth', message: 'Date of birth is required' });
-    if (!personalInfo.nationality) newErrors.push({ field: 'nationality', message: 'Nationality is required' });
-    if (!personalInfo.passportNumber) newErrors.push({ field: 'passportNumber', message: 'Passport number is required' });
-    if (!personalInfo.passportExpiry) newErrors.push({ field: 'passportExpiry', message: 'Passport expiry is required' });
-
-    setErrors(newErrors);
-    return newErrors.length === 0;
-  };
-
-  const validateTravelInfo = (): boolean => {
-    const newErrors: ValidationError[] = [];
-    const { travelInfo } = formData;
-
-    if (!travelInfo.countryId) newErrors.push({ field: 'countryId', message: 'Destination country is required' });
-    if (!travelInfo.visaTypeId) newErrors.push({ field: 'visaTypeId', message: 'Visa type is required' });
-    if (!travelInfo.travelDate) newErrors.push({ field: 'travelDate', message: 'Travel date is required' });
-    if (!travelInfo.returnDate) newErrors.push({ field: 'returnDate', message: 'Return date is required' });
-    if (!travelInfo.purpose) newErrors.push({ field: 'purpose', message: 'Purpose of travel is required' });
-
-    setErrors(newErrors);
-    return newErrors.length === 0;
-  };
-
-  const validateDocuments = (): boolean => {
-    const newErrors: ValidationError[] = [];
-    const requiredDocs = documentRequirements.filter(d => d.required);
-
-    requiredDocs.forEach(req => {
-      const uploaded = formData.documents.find(d => d.requirementId === req.id);
-      if (!uploaded) {
-        newErrors.push({ field: req.id, message: `${req.name} is required` });
-      }
-    });
-
-    setErrors(newErrors);
-    return newErrors.length === 0;
-  };
-
-  const validateAdditionalInfo = (): boolean => {
-    const newErrors: ValidationError[] = [];
-    const { additionalInfo } = formData;
-
-    if (!additionalInfo.emergencyContact) {
-      newErrors.push({ field: 'emergencyContact', message: 'Emergency contact is required' });
-    }
-    if (!additionalInfo.emergencyPhone) {
-      newErrors.push({ field: 'emergencyPhone', message: 'Emergency phone is required' });
-    }
-
-    setErrors(newErrors);
-    return newErrors.length === 0;
-  };
-
-  const handleSectionClick = (sectionId: string) => {
-    setCurrentSection(sectionId);
-    setErrors([]);
-  };
-
-  const handlePersonalInfoNext = () => {
-    if (validatePersonalInfo()) {
-      setCurrentSection('travel');
-    }
-  };
-
-  const handleTravelInfoNext = () => {
-    if (validateTravelInfo()) {
-      setCurrentSection('documents');
-    }
-  };
-
-  const handleDocumentsNext = () => {
-    if (validateDocuments()) {
-      setCurrentSection('additional');
-    }
+    const total = sections.reduce((sum, s) => sum + s.fields, 0);
+    const completed = sections.reduce((sum, s) => sum + s.completedFields, 0);
+    return Math.round((completed / total) * 100);
   };
 
   const handleDocumentUpload = (requirementId: string, file: File) => {
@@ -280,194 +88,124 @@ const ApplicationPortal = () => {
       status: 'pending',
       url: URL.createObjectURL(file)
     };
-
     setFormData(prev => ({
       ...prev,
       documents: [...prev.documents.filter(d => d.requirementId !== requirementId), newDoc]
     }));
   };
 
-  const handleDocumentRemove = (documentId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      documents: prev.documents.filter(d => d.id !== documentId)
-    }));
-  };
-
   const handleSubmit = async () => {
-    if (!validateAdditionalInfo()) return;
-
     setIsSubmitting(true);
+    const newId = `VN-${Date.now().toString().slice(-6)}`;
+    
+    // WhatsApp Format
+    const message = `*NEW VISA APPLICATION: ${newId}*%0A` +
+      `--------------------------%0A` +
+      `*Client:* ${formData.personalInfo.firstName} ${formData.personalInfo.lastName}%0A` +
+      `*Destination:* ${formData.travelInfo.countryId}%0A` +
+      `*Status:* Dossier Transmitted.`;
 
-    setTimeout(() => {
-      const newApplicationId = `VFP-${Date.now().toString().slice(-8)}`;
-      setApplicationId(newApplicationId);
-      setIsSubmitting(false);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        mode: "no-cors",
+      });
+      setApplicationId(newId);
       setShowSuccessModal(true);
-    }, 2000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-
-
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#FDFDFD] font-sans antialiased text-slate-900 selection:bg-blue-600/10">
+      <div className="pt-32 pb-24 max-w-[1400px] mx-auto px-6 lg:px-12">
+        
+        {/* Navigation Breadcrumb */}
+        <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-10">
+          <button onClick={() => navigate('/homepage')} className="hover:text-blue-600 transition-colors">Home</button>
+          <Icon name="ChevronRight" size={10} className="text-slate-300" />
+          <span className="text-slate-950 italic">Application Portal</span>
+        </div>
 
-
-      <div className="pt-20 pb-12 md:pb-16 lg:pb-20">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="mb-8 md:mb-12">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-              <button onClick={() => navigate('/homepage')} className="hover:text-primary transition-smooth">
-                Home
-              </button>
-              <Icon name="ChevronRight" size={16} />
-              <span className="text-foreground">Application Portal</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
+          {/* Progress Sidebar */}
+          <aside className="lg:col-span-4 lg:sticky lg:top-32 h-fit">
+            <ProgressTracker
+              sections={sections}
+              currentSection={currentSection}
+              completionPercentage={calculateProgress()}
+              onSectionClick={setCurrentSection}
+            />
+            
+            {/* Help Widget */}
+            <div className="mt-8 p-8 rounded-[2.5rem] bg-slate-950 text-white relative overflow-hidden group">
+               <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:rotate-12 transition-transform duration-700">
+                  <Icon name="ShieldCheck" size={80} />
+               </div>
+               <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-4">Priority Support</h4>
+               <p className="text-xs text-slate-400 font-medium leading-relaxed mb-6 italic">
+                 "Our consultants are actively monitoring the manifest for any protocol deviations."
+               </p>
+               <button 
+                  onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank')}
+                  className="w-full py-4 bg-white/10 hover:bg-white text-white hover:text-slate-950 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border border-white/20 hover:border-white"
+               >
+                 Open Comms-Link
+               </button>
             </div>
+          </aside>
 
-            <h1 className="font-headline font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-3">
-              Visa Application Portal
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-3xl">
-              Complete your visa application in simple steps. Our secure portal guides you through the process with real-time validation and progress tracking.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            <div className="lg:col-span-1">
-              <div className="lg:sticky lg:top-24">
-                <ProgressTracker
-                  sections={sections}
-                  currentSection={currentSection}
-                  completionPercentage={calculateProgress()}
-                  onSectionClick={handleSectionClick}
-                />
-
-                {/* Help Box: Using Midnight Blue and Gold for a premium support feel */}
-                <div className="mt-6 p-4 md:p-6 bg-brand-midnight/[0.03] border border-brand-gold/20 rounded-xl shadow-sm">
-                  <div className="flex items-start gap-3">
-                    {/* Icon: Champagne Gold for premium quality service */}
-                    <Icon name="MessageCircle" size={20} className="text-brand-gold flex-shrink-0 mt-0.5" />
-                    <div>
-                      {/* Header: Deep Midnight Blue for Authority */}
-                      <h4 className="font-bold text-sm md:text-base text-brand-midnight mb-1">
-                        Expert Support
-                      </h4>
-                      {/* Subtext: Steel Blue / Slate for Modernity */}
-                      <p className="text-xs md:text-sm text-brand-slate mb-4 font-medium">
-                        Our visa consultants are available 24/7 for real-time guidance.
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        iconName="MessageCircle"
-                        iconPosition="left"
-                        fullWidth
-                        onClick={() => window.open('https://wa.me/', '_blank')}
-                        /* Button: Midnight Blue for Trust */
-                        className="text-brand-midnight border-brand-midnight hover:bg-brand-midnight/5 font-bold uppercase tracking-wide text-[10px]"
-                      >
-                        Consult via WhatsApp
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2">
-              <div className="w-full bg-card rounded-xl border border-border p-6 md:p-8 lg:p-10">
-                {currentSection === 'personal' && (
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon name="User" size={24} className="text-primary" />
-                      </div>
-                      <div>
-                        <h2 className="font-headline font-semibold text-xl md:text-2xl text-foreground">
-                          Personal Information
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                          Enter your basic details as shown on your passport
-                        </p>
-                      </div>
-                    </div>
+          {/* Form Content Area */}
+          <main className="lg:col-span-8">
+            <div className="bg-white p-8 md:p-16 rounded-[3.5rem] border border-slate-100 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.04)]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSection}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {currentSection === 'personal' && (
                     <PersonalInfoForm
                       formData={formData.personalInfo}
                       onChange={(data) => setFormData(prev => ({ ...prev, personalInfo: data }))}
-                      onNext={handlePersonalInfoNext}
+                      onNext={() => setCurrentSection('travel')}
                       errors={errors}
                     />
-                  </div>
-                )}
+                  )}
 
-                {currentSection === 'travel' && (
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon name="Plane" size={24} className="text-primary" />
-                      </div>
-                      <div>
-                        <h2 className="font-headline font-semibold text-xl md:text-2xl text-foreground">
-                          Travel Details
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                          Select your destination and visa type
-                        </p>
-                      </div>
-                    </div>
+                  {currentSection === 'travel' && (
                     <TravelInfoForm
                       formData={formData.travelInfo}
                       onChange={(data) => setFormData(prev => ({ ...prev, travelInfo: data }))}
-                      onNext={handleTravelInfoNext}
+                      onNext={() => setCurrentSection('documents')}
                       onBack={() => setCurrentSection('personal')}
                       errors={errors}
-                      countries={countries}
+                      countries={countriesData}
                     />
-                  </div>
-                )}
+                  )}
 
-                {currentSection === 'documents' && (
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon name="Upload" size={24} className="text-primary" />
-                      </div>
-                      <div>
-                        <h2 className="font-headline font-semibold text-xl md:text-2xl text-foreground">
-                          Document Upload
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                          Upload required documents for your visa application
-                        </p>
-                      </div>
-                    </div>
+                  {currentSection === 'documents' && (
                     <DocumentUploadForm
                       requirements={documentRequirements}
                       uploadedDocuments={formData.documents}
                       onUpload={handleDocumentUpload}
-                      onRemove={handleDocumentRemove}
-                      onNext={handleDocumentsNext}
+                      onRemove={(id) => setFormData(prev => ({ ...prev, documents: prev.documents.filter(d => d.id !== id) }))}
+                      onNext={() => setCurrentSection('additional')}
                       onBack={() => setCurrentSection('travel')}
                       errors={errors}
                     />
-                  </div>
-                )}
+                  )}
 
-                {currentSection === 'additional' && (
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon name="FileCheck" size={24} className="text-primary" />
-                      </div>
-                      <div>
-                        <h2 className="font-headline font-semibold text-xl md:text-2xl text-foreground">
-                          Additional Information
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                          Final details and declarations
-                        </p>
-                      </div>
-                    </div>
+                  {currentSection === 'additional' && (
                     <AdditionalInfoForm
                       formData={formData.additionalInfo}
                       onChange={(data) => setFormData(prev => ({ ...prev, additionalInfo: data }))}
@@ -476,11 +214,11 @@ const ApplicationPortal = () => {
                       errors={errors}
                       isSubmitting={isSubmitting}
                     />
-                  </div>
-                )}
-              </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </div>
+          </main>
         </div>
       </div>
 
@@ -488,7 +226,6 @@ const ApplicationPortal = () => {
         isOpen={showSuccessModal}
         applicationId={applicationId}
         onClose={() => setShowSuccessModal(false)}
-      // onTrackApplication={handleTrackApplication}
       />
     </div>
   );

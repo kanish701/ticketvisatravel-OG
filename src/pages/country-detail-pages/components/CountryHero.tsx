@@ -36,15 +36,15 @@ const CountryHero = ({ country }: CountryHeroProps) => {
       </motion.div>
 
       {/* 2. BUREAU NAVIGATION BAR */}
-      <div className="absolute top-8 left-8 lg:left-12 z-30">
+      {/* <div className="absolute top-12 left-8 lg:left-12 z-30">
         <button
           onClick={() => navigate(-1)}
-          className="group flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-white/60 hover:text-white transition-all"
+          className="group flex items-center gap-4 cursor-pointer text-[10px] font-black uppercase tracking-[0.4em] text-white/60 hover:text-white transition-all"
         >
           <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-2" />
-          <span>Return to Bureau</span>
+          <span>Return to Home</span>
         </button>
-      </div>
+      </div> */}
 
       {/* 3. CORE CONTENT AREA */}
       <div className="relative z-20 h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col justify-end pb-16">
