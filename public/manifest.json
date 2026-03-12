@@ -1,15 +1,20 @@
 {
-  "short_name": "visaflow-pro",
-  "name": "visaflow-pro",
+  "short_name": "TVT Bureau",
+  "name": "Ticket Visa Travel Bureau",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/assets/images/Ticket-Visa-Travel-favicon.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/Ticket-Visa-Travel-favicon.png",
+      "type": "image/png",
+      "sizes": "192x192"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#1e3a8a",
+  "background_color": "#FDFCFB"
 }
