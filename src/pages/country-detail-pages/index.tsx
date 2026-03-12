@@ -15,13 +15,13 @@ import StickySidebar from './components/StickySidebar';
 import SimilarDestinations from './components/SimilarDestinations';
 import Icon from '../../components/AppIcon';
 
-/* TEMPORARY HIDDEN COMPONENTS (Keep imports for when you are ready to enable)
-  import RequirementsSection from './components/RequirementsSection';
-  import TestimonialCard from './components/TestimonialCard';
-  import FAQSection from './components/FAQSection';
-  import EmbassyInfoCard from './components/EmbassyInfoCard';
-  import PolicyUpdates from './components/PolicyUpdates';
-*/
+// TEMPORARY HIDDEN COMPONENTS (Keep imports for when you are ready to enable)
+import RequirementsSection from './components/RequirementsSection';
+import TestimonialCard from './components/TestimonialCard';
+import FAQSection from './components/FAQSection';
+// import EmbassyInfoCard from './components/EmbassyInfoCard';
+// import PolicyUpdates from './components/PolicyUpdates';
+
 
 // --- BACKGROUND ANIMATION COMPONENT ---
 const BackgroundEffect = () => {
@@ -123,7 +123,7 @@ const CountryDetails = () => {
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {country.testimonials?.map((t, i) => <TestimonialCard key={t.id} testimonial={t} index={i} />)}
                  </div>
-              </section>
+              </section> */}
 
               <section id="rejection-prevention">
                  <h2 className="text-2xl font-bold mb-8">Rejection Prevention</h2>
@@ -137,10 +137,10 @@ const CountryDetails = () => {
                  </div>
               </section>
 
-              <section id="embassy-info">
+              {/* <section id="embassy-info">
                  <EmbassyInfoCard embassyInfo={country.embassyInfo} />
-              </section> 
-              */}
+              </section>  */}
+             
 
             </div>
 
@@ -159,10 +159,10 @@ const CountryDetails = () => {
 
         {/* --- FOOTER CONTENT --- */}
         <div className="relative z-10 space-y-0">
-          {/* <RequirementsSection requirements={country.requirements} />
-          <PolicyUpdates updates={country.recentUpdates} />
-          <FAQSection faqs={country.faqs} /> 
-          */}
+           <RequirementsSection requirements={country.requirements} />
+          {/* <PolicyUpdates updates={country.recentUpdates} /> */}
+          {/* <FAQSection faqs={country.faqs} />  */}
+          
 
           <SimilarDestinations destinations={relatedCountries} />
         </div>

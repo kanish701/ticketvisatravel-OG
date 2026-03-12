@@ -17,8 +17,8 @@ export const countriesData: Country[] = [
     successRate: 85.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999,
-      totalFee: 7999,
+      serviceFee: 10499,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable'
     },
@@ -28,7 +28,7 @@ export const countriesData: Country[] = [
         name: 'B-1/B-2 Tourist & Business',
         description: 'Standard visitor visa for tourism, family visits, and business meetings.',
         duration: '10 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '3-5 days after interview',
         icon: 'Globe'
       },
@@ -37,7 +37,7 @@ export const countriesData: Country[] = [
         name: 'Student Visa',
         description: 'For international students pursuing academic studies or language training programs in the USA.',
         duration: '10 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '3-5 days after interview',
         icon: 'Globe'
       },
@@ -46,7 +46,7 @@ export const countriesData: Country[] = [
         name: 'H-1B Skilled Worker Visa',
         description: 'For professionals working in specialty occupations such as IT, engineering, healthcare, and finance.',
         duration: '10 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '3-5 days after interview',
         icon: 'Globe'
       },
@@ -265,8 +265,8 @@ export const countriesData: Country[] = [
     successRate: 82.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999,
-      totalFee: 7999,
+      serviceFee: 10499,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable'
     },
@@ -276,7 +276,7 @@ export const countriesData: Country[] = [
         name: 'Visitor Visa (Temporary Resident Visa)',
         description: 'For tourism, visiting family/friends, or short business trips.',
         duration: 'Up to 10 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '30-45 days',
         icon: 'Map'
       }
@@ -499,8 +499,8 @@ export const countriesData: Country[] = [
     successRate: 88.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999,
-      totalFee: 7999,
+      serviceFee: 10499,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee paid directly at Embassy'
     },
@@ -510,7 +510,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Turista)',
         description: 'For tourism, transit, or unpaid business activities.',
         duration: '180 Days (Up to 10 Years Validity)',
-        price: 7999,
+        price: 10499,
         processingTime: '2-5 days after interview',
         icon: 'Sun'
       }
@@ -732,8 +732,8 @@ export const countriesData: Country[] = [
     successRate: 92.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999,
-      totalFee: 7999,
+      serviceFee: 10499,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable'
     },
@@ -743,7 +743,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (VIVIS)',
         description: 'For tourism, visiting friends/relatives, and cultural events.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Sun'
       },
@@ -752,7 +752,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa (VIVIS)',
         description: 'For business meetings, trade fairs, and corporate events (unpaid).',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       }
@@ -970,8 +970,8 @@ export const countriesData: Country[] = [
     successRate: 90.0,
     pricing: {
       embassyFee: "Notify Later", // "Gratis" (Free) for Indian Citizens for standard Tourist Visa
-      serviceFee: 7999, // Professional fee for documentation & interview prep
-      totalFee: 7999,
+      serviceFee: 10499, // Professional fee for documentation & interview prep
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Visa is gratis'
     },
@@ -981,7 +981,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Sticker)',
         description: 'Standard paper visa for Indians without US/Schengen visas.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '10-15 Days',
         icon: 'FileText'
       },
@@ -1212,8 +1212,8 @@ export const countriesData: Country[] = [
     successRate: 85.0,
     pricing: {
       embassyFee: "Notify Later", // Approx £127 at consular exchange rate
-      serviceFee: 7999,
-      totalFee: 7999,
+      serviceFee: 10499,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable once biometrics done'
     },
@@ -1223,7 +1223,7 @@ export const countriesData: Country[] = [
         name: 'Standard Visitor Visa',
         description: 'For tourism, visiting family/friends, and business meetings.',
         duration: '6 Months',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Umbrella'
       },
@@ -1232,7 +1232,7 @@ export const countriesData: Country[] = [
         name: 'Long-term Standard Visitor (2 Years)',
         description: 'Multiple entry visa valid for 2 years (max stay 6 months per visit).',
         duration: '2 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Clock'
       }
@@ -1450,9 +1450,9 @@ export const countriesData: Country[] = [
     successRate: 88.5,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Subject to exchange rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 3200, // Approx VFS Service Charge (payable at center)
-      totalFee: 7999, // Total Estimate
+      totalFee: 10499, // Total Estimate
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -1462,7 +1462,7 @@ export const countriesData: Country[] = [
         name: 'Short Stay Visa (Tourist)',
         description: 'Standard "Type C" Schengen visa for tourism and leisure.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Sun'
       },
@@ -1471,7 +1471,7 @@ export const countriesData: Country[] = [
         name: 'Short Stay Visa (Business)',
         description: 'For corporate meetings, conferences, or trade fairs.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Briefcase'
       }
@@ -1680,7 +1680,7 @@ export const countriesData: Country[] = [
     successRate: 91.0,
     pricing: {
       embassyFee: "Notify Later", // Approx €90
-      serviceFee: 7999,
+      serviceFee: 10499,
       // vfsFee: 1800, // Approx VFS Service Charge
       totalFee: 17899,
       currency: 'INR',
@@ -1692,7 +1692,7 @@ export const countriesData: Country[] = [
         name: 'Schengen Visa (Type C)',
         description: 'For tourism, visiting family/friends, and cultural trips.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Beer'
       },
@@ -1701,7 +1701,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For trade fair visits (Messe) and corporate meetings.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       }
@@ -1910,9 +1910,9 @@ export const countriesData: Country[] = [
     successRate: 88.0,
     pricing: {
       embassyFee: "Notify Later", // €90 (Fixed exchange rate for 2026)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2400, // Approx VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -1922,7 +1922,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (C-Type)',
         description: 'Short stay visa for tourism, leisure, and sightseeing.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Pizza'
       },
@@ -1931,7 +1931,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings, trade fairs, and industrial visits.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Briefcase'
       }
@@ -2140,9 +2140,9 @@ export const countriesData: Country[] = [
     successRate: 89.5,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Fixed exchange rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // blsFee: 1800, // BLS International Service Charge (Approx)
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & BLS fees non-refundable'
     },
@@ -2152,7 +2152,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa',
         description: 'For tourism, holidays, and visiting family.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Sun'
       },
@@ -2161,7 +2161,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For corporate meetings and trade conferences.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Working Days',
         icon: 'Briefcase'
       }
@@ -2370,9 +2370,9 @@ export const countriesData: Country[] = [
     successRate: 92.5,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Fixed Consular Exchange Rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2200, // Approx VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -2382,7 +2382,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'Short stay for tourism, cycling tours, and leisure.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'Sun'
       },
@@ -2391,7 +2391,7 @@ export const countriesData: Country[] = [
         name: 'Visiting Family/Friends',
         description: 'For visiting relatives using the specific "Garantstelling" form.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'Users'
       },
@@ -2400,7 +2400,7 @@ export const countriesData: Country[] = [
         name: 'Carpet Visa (Business)',
         description: 'Expedited business visa for employees of registered companies (Orange Carpet Prog).',
         duration: 'Up to 5 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '5-10 Days',
         icon: 'Briefcase'
       }
@@ -2618,9 +2618,9 @@ export const countriesData: Country[] = [
     successRate: 94.0,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Subject to current Consular Exchange Rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2690, // VFS Global Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -2630,7 +2630,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'For tourism, skiing holidays, and visiting family.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '10-15 Days',
         icon: 'Snowflake'
       },
@@ -2639,7 +2639,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For corporate meetings, Davos summit, or UN visits.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '10-15 Days',
         icon: 'Briefcase'
       },
@@ -2648,7 +2648,7 @@ export const countriesData: Country[] = [
         name: 'Cascade Visa (Long Term)',
         description: '2 or 5-year multiple entry visa for frequent travelers (New 2025/26 Rule).',
         duration: '2-5 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'TrendingUp'
       }
@@ -2857,9 +2857,9 @@ export const countriesData: Country[] = [
     successRate: 91.5,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Fixed Consular Exchange Rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 1800, // Approx VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -2869,7 +2869,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'For sightseeing, holidays, and cultural visits.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Mountain'
       },
@@ -2878,7 +2878,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings, conferences, and trade fairs.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       },
@@ -2887,7 +2887,7 @@ export const countriesData: Country[] = [
         name: 'Visitor Visa (Family/Friends)',
         description: 'For visiting relatives, often requiring the EVE (Electronic Guarantee).',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Users'
       }
@@ -3096,7 +3096,7 @@ export const countriesData: Country[] = [
     successRate: 87.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2730, // Approx Service Charge (Subject to new provider)
       totalFee: 19999,
       currency: 'INR',
@@ -3108,7 +3108,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'For island hopping, historical sightseeing, and leisure.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Sun'
       },
@@ -3117,7 +3117,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings, conferences, and shipping industry events.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       }
@@ -3326,9 +3326,9 @@ export const countriesData: Country[] = [
     successRate: 86.5,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Consular Rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2100, // VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -3338,7 +3338,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'Short stay for tourism, holidays, and religious pilgrimage (Fatima).',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '20-30 Days',
         icon: 'Sun'
       },
@@ -3356,7 +3356,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For corporate meetings, conferences, and trade.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'Briefcase'
       }
@@ -3574,9 +3574,9 @@ export const countriesData: Country[] = [
     successRate: 91.0,
     pricing: {
       embassyFee: "Notify Later", // Approx €90 (Fixed Consular Exchange Rate)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 1690, // Approx VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -3586,7 +3586,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'Short stay for tourism, sightseeing, and leisure.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Sun'
       },
@@ -3595,7 +3595,7 @@ export const countriesData: Country[] = [
         name: 'Visiting Family/Friends',
         description: 'Strictly requires "Form 241011" filled by the host in Sweden.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'Users'
       },
@@ -3604,7 +3604,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings, conferences, and corporate training.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       }
@@ -3813,9 +3813,9 @@ export const countriesData: Country[] = [
     successRate: 92.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // vfsFee: 2200, // Approx VFS Service Charge
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable once application sent to UDI'
     },
@@ -3825,7 +3825,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (Type C)',
         description: 'For fjord cruises, Northern Lights tours, and general tourism.',
         duration: '90 Days (in 180-day period)',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Mountain'
       },
@@ -3834,7 +3834,7 @@ export const countriesData: Country[] = [
         name: 'Visiting Family/Friends',
         description: 'Requires the specific "Guarantee Form" stamped by Norwegian police.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'Users'
       },
@@ -3843,7 +3843,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings, maritime industry events, and conferences.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15 Days',
         icon: 'Briefcase'
       }
@@ -4052,9 +4052,9 @@ export const countriesData: Country[] = [
     successRate: 88.0,
     pricing: {
       embassyFee: "Notify Later", // €60 Single Entry (Consular Rate)
-      serviceFee: 7999,
+      serviceFee: 10499,
       // vfsFee: 4100, // Approx VFS Service Charge + Courier
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
     },
@@ -4064,7 +4064,7 @@ export const countriesData: Country[] = [
         name: 'Short Stay \'C\' (Tourist)',
         description: 'For tourism and sightseeing. Valid for 90 days.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '25 Days',
         icon: 'Clover'
       },
@@ -4073,7 +4073,7 @@ export const countriesData: Country[] = [
         name: 'Visit Family/Friend',
         description: 'Strict requirements for invitation letters and host financials.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '25 Days',
         icon: 'Users'
       }
@@ -4256,8 +4256,8 @@ export const countriesData: Country[] = [
     successRate: 95.0,
     pricing: {
       embassyFee: "Notify Later", // Approx $52 USD for E-Visa
-      serviceFee: 7999, // Your Agency Fee
-      totalFee: 7999,
+      serviceFee: 10499, // Your Agency Fee
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable'
     },
@@ -4276,7 +4276,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Sticker Visa',
         description: 'For stays longer than 16 days. Requires Tourist Voucher.',
         duration: '30/90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '15-20 Days',
         icon: 'FileText'
       }
@@ -4451,9 +4451,9 @@ export const countriesData: Country[] = [
     successRate: 90.0,
     pricing: {
       embassyFee: "Notify Later", // ~$43 USD (E-Visa) OR ~₹12,500 (Sticker Visa)
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       // gatewayFee: 4500, // Gateway International Service Charge (Sticker Only)
-      totalFee: 7999, // Estimate for Sticker Visa Total
+      totalFee: 10499, // Estimate for Sticker Visa Total
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov/Gateway fees non-refundable'
     },
@@ -4659,7 +4659,7 @@ export const countriesData: Country[] = [
     successRate: 96.0,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
 
       // gatewayFee: 0,
       totalFee: 9349,
@@ -4672,7 +4672,7 @@ export const countriesData: Country[] = [
         name: 'Tourist e-Visa',
         description: 'Single entry only. Fully digital process. Valid for 90 days.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '5-7 Days',
         icon: 'Wifi'
       },
@@ -4681,7 +4681,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Sticker Visa',
         description: 'Required for Double/Multiple entry or if e-Visa is not suitable.',
         duration: '90 Days / 5 Years',
-        price: 7999,
+        price: 10499,
         processingTime: '5-8 Days',
         icon: 'Stamp'
       },
@@ -4690,7 +4690,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa',
         description: 'For meetings and cultural exchange. Requires invitation from Japan.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '5 Days',
         icon: 'Briefcase'
       }
@@ -4887,7 +4887,7 @@ export const countriesData: Country[] = [
     successRate: 91.5,
     pricing: {
       embassyFee: "Notify Later", // Approx $40 for Single Entry
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       totalFee: 12779,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov & VFS fees non-refundable'
@@ -4898,7 +4898,7 @@ export const countriesData: Country[] = [
         name: 'Tourist Visa (C-3-9)',
         description: 'Standard short-term visa for tourism. Valid for 90 days.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '10-15 Days',
         icon: 'Map'
       },
@@ -4907,7 +4907,7 @@ export const countriesData: Country[] = [
         name: 'Business Visa (C-3-4)',
         description: 'For market research, meetings, and consultations.',
         duration: '90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '10-15 Days',
         icon: 'Briefcase'
       },
@@ -6245,7 +6245,7 @@ export const countriesData: Country[] = [
     successRate: 96.5,
     pricing: {
       embassyFee: "Notify Later",
-      serviceFee: 7999, // Your Agency Fee
+      serviceFee: 10499, // Your Agency Fee
       totalFee: 12917,
       currency: 'INR',
       refundPolicy: 'Service fee non-refundable; Gov fee non-refundable'
@@ -6256,7 +6256,7 @@ export const countriesData: Country[] = [
         name: 'L Visa (Tourist)',
         description: 'Standard tourist visa. Single or Double entry.',
         duration: '30 Days (per entry)',
-        price: 7999,
+        price: 10499,
         processingTime: '4-5 Days',
         icon: 'Map'
       },
@@ -6265,7 +6265,7 @@ export const countriesData: Country[] = [
         name: 'M Visa (Business)',
         description: 'For commercial trade activities. Requires invitation letter.',
         duration: '30-90 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '4-5 Days',
         icon: 'Briefcase'
       }
@@ -7228,7 +7228,7 @@ export const countriesData: Country[] = [
     pricing: {
       embassyFee: '6500', // Approx ~280-300 AED (Sponsored Rate)
       serviceFee: 1499, // Agency Processing Fee
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Fees are non-refundable once applied'
     },
@@ -7238,7 +7238,7 @@ export const countriesData: Country[] = [
         name: '30 Days Tourist Visa',
         description: 'Standard single-entry visa for tourism. Valid for 60 days from issue.',
         duration: '30 Days',
-        price: 7999,
+        price: 10499,
         processingTime: '2-4 Days',
         icon: 'Building'
       },
@@ -8061,7 +8061,7 @@ export const countriesData: Country[] = [
     pricing: {
       embassyFee: "6500", // ~29 BD (Application + Issuance for 1 Year Visa)
       serviceFee: 1499, // Agency Fee
-      totalFee: 7999,
+      totalFee: 10499,
       currency: 'INR',
       refundPolicy: 'Application fee (4 BD) is non-refundable; Issuance fee refundable if rejected'
     },
@@ -8071,7 +8071,7 @@ export const countriesData: Country[] = [
         name: '1 Year Multiple Entry',
         description: 'Most popular tourist visa. Allows multiple entries, up to 90 days stay per visit.',
         duration: '90 Days (per visit)',
-        price: 7999, // ~29 BD Govt Fee + Service
+        price: 10499, // ~29 BD Govt Fee + Service
         processingTime: '3-5 Days',
         icon: 'Globe'
       },
@@ -9727,7 +9727,7 @@ export const countriesData: Country[] = [
     successRate: 89.0,
     pricing: {
       embassyFee: "Notify Later", // ~NZD 341 (Visa) + NZD 100 (IVL)
-      serviceFee: 7999, // DIY via RealMe Recommended
+      serviceFee: 10499, // DIY via RealMe Recommended
       totalFee: 22100,
       currency: 'INR',
       refundPolicy: 'Government fees & IVL are non-refundable'

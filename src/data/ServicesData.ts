@@ -447,85 +447,85 @@ export const servicesData: ServiceCategory[] = [
   // =========================================================================
   // 5. BUSINESS & INVESTOR VISAS
   // =========================================================================
-  // {
-  //   id: 'business',
-  //   title: 'Business & Investor',
-  //   description: 'Launch your startup, expand your business, or secure residency through investment. Tailored for HNWIs and Entrepreneurs.',
-  //   heroImage: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop',
-  //   subServices: [
-  //     {
-  //       id: 'canada-startup',
-  //       title: 'Canada Start-Up Visa',
-  //       country: 'Canada',
-  //       description: 'A direct PR pathway for immigrant entrepreneurs with the skills and potential to build businesses in Canada.',
-  //       features: [
-  //         'Direct Permanent Residency',
-  //         'No minimum investment (Angel/Incubator)',
-  //         'Up to 5 co-founders per startup',
-  //         'Access to North American market'
-  //       ],
-  //       requirements: [
-  //         'Letter of Support from Designated Org',
-  //         'CLB 5 Language Score',
-  //         'Settlement Funds',
-  //         'Ownership of at least 10% of voting rights'
-  //       ]
-  //     },
-  //     {
-  //       id: 'uk-innovator',
-  //       title: 'UK Innovator Founder',
-  //       country: 'United Kingdom',
-  //       description: 'For experienced business people seeking to establish a business in the UK.',
-  //       features: [
-  //         'No minimum investment funds required',
-  //         'Settlement (ILR) after 3 years',
-  //         'Family can join you',
-  //         'Work for your business'
-  //       ],
-  //       requirements: [
-  //         'Endorsement from approved body',
-  //         'Innovative, Viable, Scalable business idea',
-  //         'B2 Level English',
-  //         'Maintenance funds'
-  //       ]
-  //     },
-  //     {
-  //       id: 'dubai-golden-visa',
-  //       title: 'UAE Golden Visa',
-  //       country: 'Dubai (UAE)',
-  //       description: '10-year residency for investors, real estate owners, and specialized talents.',
-  //       features: [
-  //         '10 Year Validity',
-  //         '100% Business Ownership',
-  //         'No Sponsor Needed',
-  //         'Sponsor unlimited domestic helpers'
-  //       ],
-  //       requirements: [
-  //         'Real Estate Investment AED 2M+',
-  //         'Or Public Investment AED 2M+',
-  //         'Or Specialized Talent (Doctors/Coders)'
-  //       ]
-  //     },
-  //     {
-  //       id: 'eb5-usa',
-  //       title: 'USA EB-5 Investor Visa',
-  //       country: 'USA',
-  //       description: 'Green card through investment in US commercial enterprise.',
-  //       features: [
-  //         'Green Card for Family',
-  //         'Live Anywhere in US',
-  //         'No Sponsorship Required',
-  //         'Path to Citizenship'
-  //       ],
-  //       requirements: [
-  //         '$800k Investment in TEA (Targeted Employment Area)',
-  //         'Create 10 Jobs',
-  //         'Source of Funds Proof',
-  //         'At-risk investment requirement'
-  //       ]
-  //     }
-  //   ]
-  // },
+  {
+    id: 'business',
+    title: 'Business & Investor',
+    description: 'Launch your startup, expand your business, or secure residency through investment. Tailored for HNWIs and Entrepreneurs.',
+    heroImage: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop',
+    subServices: [
+      {
+        id: 'canada-startup',
+        title: 'Canada Start-Up Visa',
+        country: 'Canada',
+        description: 'A direct PR pathway for immigrant entrepreneurs with the skills and potential to build businesses in Canada.',
+        features: [
+          'Direct Permanent Residency',
+          'No minimum investment (Angel/Incubator)',
+          'Up to 5 co-founders per startup',
+          'Access to North American market'
+        ],
+        requirements: [
+          'Letter of Support from Designated Org',
+          'CLB 5 Language Score',
+          'Settlement Funds',
+          'Ownership of at least 10% of voting rights'
+        ]
+      },
+      {
+        id: 'uk-innovator',
+        title: 'UK Innovator Founder',
+        country: 'United Kingdom',
+        description: 'For experienced business people seeking to establish a business in the UK.',
+        features: [
+          'No minimum investment funds required',
+          'Settlement (ILR) after 3 years',
+          'Family can join you',
+          'Work for your business'
+        ],
+        requirements: [
+          'Endorsement from approved body',
+          'Innovative, Viable, Scalable business idea',
+          'B2 Level English',
+          'Maintenance funds'
+        ]
+      },
+      {
+        id: 'dubai-golden-visa',
+        title: 'UAE Golden Visa',
+        country: 'Dubai (UAE)',
+        description: '10-year residency for investors, real estate owners, and specialized talents.',
+        features: [
+          '10 Year Validity',
+          '100% Business Ownership',
+          'No Sponsor Needed',
+          'Sponsor unlimited domestic helpers'
+        ],
+        requirements: [
+          'Real Estate Investment AED 2M+',
+          'Or Public Investment AED 2M+',
+          'Or Specialized Talent (Doctors/Coders)'
+        ]
+      },
+      {
+        id: 'eb5-usa',
+        title: 'USA EB-5 Investor Visa',
+        country: 'USA',
+        description: 'Green card through investment in US commercial enterprise.',
+        features: [
+          'Green Card for Family',
+          'Live Anywhere in US',
+          'No Sponsorship Required',
+          'Path to Citizenship'
+        ],
+        requirements: [
+          '$800k Investment in TEA (Targeted Employment Area)',
+          'Create 10 Jobs',
+          'Source of Funds Proof',
+          'At-risk investment requirement'
+        ]
+      }
+    ]
+  },
 // =========================================================================
   // 6. IMMIGRATION (PR PATHWAYS)
   // =========================================================================
