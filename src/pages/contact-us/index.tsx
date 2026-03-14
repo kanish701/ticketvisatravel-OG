@@ -88,7 +88,7 @@ const ContactUs = () => {
                                         <ShieldCheck size={32} />
                                     </div>
                                     <div className="space-y-2">
-                                        <h3 className="text-2xl font-serif italic">Message Authenticated</h3>
+                                        <h3 className="text-2xl font-serif italic">Message Sent</h3>
                                         <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Our desk will contact you within 24 hours.</p>
                                     </div>
                                     <button onClick={() => setIsSubmitted(false)} className="text-blue-900 font-black uppercase tracking-widest text-[10px] border-b border-blue-900 pb-1">
