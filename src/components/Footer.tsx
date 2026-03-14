@@ -64,13 +64,13 @@ const Footer = () => {
                             <div className="flex items-start gap-3">
                                 <MapPin size={18} className="text-blue-900 mt-1 shrink-0" />
                                 <p className="text-sm text-slate-600">
-                                    Block-A, Kathir IT Park, Kathir Campus, Coimbatore, TN - 641062
+                                    Karthipuram Road, Neelambur, Coimbatore, TN - 641062
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Mail size={18} className="text-blue-900 shrink-0" />
-                                <a href="mailto:ticketvisatravel@gmail.com" className="text-sm text-slate-600 hover:text-blue-900 transition-colors">
-                                    ticketvisatravel@gmail.com
+                                <a href="mailto:ticketvisaandtravel@gmail.com" className="text-sm text-slate-600 hover:text-blue-900 transition-colors">
+                                    ticketvisaandtravel@gmail.com
                                 </a>
                             </div>
                             <button 
