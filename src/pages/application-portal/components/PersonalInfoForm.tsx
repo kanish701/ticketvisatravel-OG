@@ -1,6 +1,9 @@
 import { useState, ChangeEvent, useMemo } from 'react';
+import { format } from 'date-fns';
 import { allCountries } from 'country-telephone-data'; // ✅ Import dynamic data
+import { phoneCountries as countries } from '../../../data/PortalData';
 import Input from '../../../components/ui/Input';
+import CustomDatePicker from '../../../components/ui/CustomDatePicker';
 import { ShieldCheck, ArrowRight, ChevronDown, Search, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ApplicationFormData, ValidationError } from '../../../types';
@@ -17,23 +20,11 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
   const [isNationalityOpen, setIsNationalityOpen] = useState(false);
   const [isPhoneCodeOpen, setIsPhoneCodeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const today = format(new Date(), 'yyyy-MM-dd');
   
-  // ✅ Process dynamic country data
-  const countries = useMemo(() => {
-    return allCountries.map(c => ({
-      value: c.iso2,
-      label: c.name,
-      dialCode: `+${c.dialCode}`,
-      // Convert ISO2 to emoji flag
-      flag: c.iso2.toUpperCase().replace(/./g, char => 
-        String.fromCodePoint(char.charCodeAt(0) + 127397)
-      )
-    })).sort((a, b) => a.label.localeCompare(b.label));
-  }, []);
 
-  // Default selection (India)
   const [selectedPhone, setSelectedPhone] = useState(
-    countries.find(c => c.value === 'in') || countries[0]
+    countries.find(c => c.value === (localData.nationality || 'in')) || countries[0]
   );
 
   const filteredNationalities = countries.filter(opt => 
@@ -41,7 +32,17 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
   );
 
   const handleChange = (field: keyof ApplicationFormData['personalInfo'], value: string) => {
-    const updated = { ...localData, [field]: value };
+    let updated = { ...localData, [field]: value };
+    
+    // If nationality changes, we might want to suggest the phone code too
+    if (field === 'nationality') {
+      const newCountry = countries.find(c => c.value === value);
+      if (newCountry) {
+        setSelectedPhone(newCountry);
+        updated.phoneCode = newCountry.dialCode;
+      }
+    }
+
     setLocalData(updated);
     onChange(updated);
   };
@@ -59,7 +60,14 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
 
       {/* Row 2: Birth & Dynamic Nationality Search */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-        <Input label="Date of Birth" type="date" value={localData.dateOfBirth} onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('dateOfBirth', e.target.value)} error={getError('dateOfBirth')} required className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900" />
+        <CustomDatePicker 
+          label="Date of Birth" 
+          value={localData.dateOfBirth} 
+          maxDate={today} 
+          onChange={(val) => handleChange('dateOfBirth', val)} 
+          error={getError('dateOfBirth')} 
+          required 
+        />
 
         <div className="relative flex flex-col gap-1.5">
           <label className="text-xs font-medium text-slate-500 ml-0.5">Nationality</label>
@@ -79,12 +87,18 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
                   <input autoFocus placeholder="Search..." className="w-full bg-transparent text-xs font-semibold focus:outline-none" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
                 <div className="max-h-48 overflow-y-auto">
-                  {filteredNationalities.map((opt) => (
-                    <div key={opt.value} onClick={() => { handleChange('nationality', opt.value); setIsNationalityOpen(false); setSearchQuery(''); }} className="flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-blue-50 transition-colors">
-                      <span className="text-xs font-bold text-slate-600">{opt.flag} {opt.label}</span>
-                      {localData.nationality === opt.value && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filteredNationalities.length === 0 ? (
+                    <div className="px-5 py-8 text-center text-slate-300 italic text-[10px] font-black uppercase tracking-widest">
+                      No results found
                     </div>
-                  ))}
+                  ) : (
+                    filteredNationalities.map((opt) => (
+                      <div key={opt.value} onClick={() => { handleChange('nationality', opt.value); setIsNationalityOpen(false); setSearchQuery(''); }} className="flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-blue-50 transition-colors">
+                        <span className="text-xs font-bold text-slate-600">{opt.flag} {opt.label}</span>
+                        {localData.nationality === opt.value && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                      </div>
+                    ))
+                  )}
                 </div>
               </motion.div>
             )}
@@ -106,10 +120,27 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
               </div>
               <AnimatePresence>
                 {isPhoneCodeOpen && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute left-0 top-full mt-4 bg-white border border-slate-100 shadow-2xl rounded-2xl z-50 w-64 overflow-hidden">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute left-0 top-full mt-4 bg-white border border-slate-100 shadow-[0_30px_60px_rgba(0,0,0,0.15)] rounded-2xl z-50 w-72 overflow-hidden">
+                    <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                      <Search className="w-3.5 h-3.5 text-slate-400" />
+                      <input 
+                        autoFocus 
+                        placeholder="Search code..." 
+                        className="w-full bg-transparent text-xs font-semibold focus:outline-none" 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                      />
+                    </div>
                     <div className="max-h-48 overflow-y-auto">
-                      {countries.map((opt) => (
-                        <div key={opt.value} onClick={(e) => { e.stopPropagation(); setSelectedPhone(opt); setIsPhoneCodeOpen(false); }} className="px-5 py-3 cursor-pointer hover:bg-blue-50 flex items-center justify-between">
+                      {countries.filter(c => c.label.toLowerCase().includes(searchQuery.toLowerCase()) || c.dialCode.includes(searchQuery)).map((opt) => (
+                        <div key={opt.value} onClick={(e) => { 
+                          e.stopPropagation(); 
+                          setSelectedPhone(opt); 
+                          setIsPhoneCodeOpen(false);
+                          const updated = { ...localData, phoneCode: opt.dialCode };
+                          setLocalData(updated);
+                          onChange(updated);
+                        }} className="px-5 py-3 cursor-pointer hover:bg-blue-50 flex items-center justify-between">
                           <span className="text-xs font-bold text-slate-600">{opt.flag} {opt.dialCode} <span className="opacity-40 ml-1">{opt.label}</span></span>
                           {selectedPhone.dialCode === opt.dialCode && <Check className="w-3 h-3 text-blue-600" />}
                         </div>
@@ -127,7 +158,14 @@ const PersonalInfoForm = ({ formData, onChange, onNext, errors }: PersonalInfoFo
       {/* Row 4: Passport */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
         <Input label="Passport Number" placeholder="Passport number" value={localData.passportNumber} onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('passportNumber', e.target.value)} error={getError('passportNumber')} required className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900 uppercase" />
-        <Input label="Passport Expiry" type="date" value={localData.passportExpiry} onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('passportExpiry', e.target.value)} error={getError('passportExpiry')} required className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900" />
+        <CustomDatePicker 
+          label="Passport Expiry" 
+          value={localData.passportExpiry} 
+          minDate={today} 
+          onChange={(val) => handleChange('passportExpiry', val)} 
+          error={getError('passportExpiry')} 
+          required 
+        />
       </div>
 
       {/* Footer Action */}

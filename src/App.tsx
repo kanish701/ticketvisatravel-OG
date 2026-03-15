@@ -9,7 +9,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 // --- IMPORT PAGES ---
 import Homepage from './pages/homepage';
 import CountryDetailPage from './pages/country-detail-pages';
-import ApplicationPortal from './pages/application-portal/types';
+import ApplicationPortal from './pages/application-portal';
 // import TrustSecurityCenter from './pages/trust-security-center';
 import TravelServices from './pages/travel-services';
 // import DummyTicketPage from './pages/dummy-ticket';

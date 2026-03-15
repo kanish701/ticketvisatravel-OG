@@ -1,8 +1,11 @@
 import { useState, ChangeEvent } from 'react';
+import { format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, ArrowLeft, ChevronDown, Search, Check, Globe, Calendar, Plane } from 'lucide-react';
 import Input from '../../../components/ui/Input';
+import CustomDatePicker from '../../../components/ui/CustomDatePicker';
 import { ApplicationFormData, ValidationError, Country } from '../../../types';
+import { visitPurposes, universalVisaProtocol } from '../../../data/PortalData';
 
 interface TravelInfoFormProps {
   formData: ApplicationFormData['travelInfo'];
@@ -17,7 +20,10 @@ const TravelInfoForm = ({ formData, onChange, onNext, onBack, errors, countries 
   const [localData, setLocalData] = useState(formData);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [isPurposeOpen, setIsPurposeOpen] = useState(false);
+  const [isVisaOpen, setIsVisaOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [visaSearchQuery, setVisaSearchQuery] = useState('');
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const selectedCountry = countries.find(c => c.id === localData.countryId);
 
@@ -34,13 +40,6 @@ const TravelInfoForm = ({ formData, onChange, onNext, onBack, errors, countries 
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const visitPurposes = [
-    { value: 'tourism', label: '🏖️ Tourism / Sightseeing' },
-    { value: 'business', label: '💼 Business / Conference' },
-    { value: 'family', label: '🏠 Family Visit' },
-    { value: 'medical', label: '🏥 Medical Treatment' },
-    { value: 'work', label: '🛠️ Job Seeker' }
-  ];
 
   return (
     <div className="max-w-4xl mx-auto space-y-12 py-8 animate-in fade-in duration-500 font-sans">
@@ -71,62 +70,113 @@ const TravelInfoForm = ({ formData, onChange, onNext, onBack, errors, countries 
                   <input autoFocus placeholder="Search destination..." className="w-full bg-transparent text-xs font-semibold focus:outline-none" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
                 <div className="max-h-60 overflow-y-auto">
-                  {filteredCountries.map((c) => (
-                    <div key={c.id} onClick={() => { handleChange('countryId', c.id); setIsCountryOpen(false); setSearchQuery(''); }} className="flex items-center justify-between px-5 py-3.5 cursor-pointer hover:bg-blue-50 transition-colors">
-                      <span className="text-xs font-bold text-slate-600">{c.name}</span>
-                      {localData.countryId === c.id && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filteredCountries.length === 0 ? (
+                    <div className="px-5 py-8 text-center">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">No matching destinations</p>
                     </div>
-                  ))}
+                  ) : (
+                    filteredCountries.map((c) => (
+                      <div key={c.id} onClick={() => { handleChange('countryId', c.id); setIsCountryOpen(false); setSearchQuery(''); }} className="flex items-center justify-between px-5 py-3.5 cursor-pointer hover:bg-blue-50 transition-colors">
+                        <span className="text-xs font-bold text-slate-600">{c.name}</span>
+                        {localData.countryId === c.id && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                      </div>
+                    ))
+                  )}
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Visa Type - Dynamic Select */}
+        {/* Visa Type - Searchable Dropdown */}
         <div className="relative flex flex-col gap-1.5">
           <label className="text-xs font-medium text-slate-500 ml-0.5">Visa Classification</label>
-          <select 
-            disabled={!localData.countryId}
-            value={localData.visaTypeId}
-            onChange={(e) => handleChange('visaTypeId', e.target.value)}
-            className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900 appearance-none disabled:opacity-30 cursor-pointer"
+          <div 
+            onClick={() => localData.countryId && setIsVisaOpen(!isVisaOpen)}
+            className={`h-12 border-b border-slate-200 flex items-center justify-between cursor-pointer transition-all ${
+              !localData.countryId ? 'opacity-30 cursor-not-allowed' : 'hover:border-blue-600'
+            }`}
           >
-            <option value="" disabled>Select Visa Category</option>
-            {selectedCountry?.visaTypes.map(v => (
-              <option key={v.id} value={v.id}>{v.name} ({v.processingTime})</option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-0 bottom-4 w-4 h-4 text-slate-400 pointer-events-none" />
+            <span className={`text-sm font-semibold ${localData.visaTypeId ? 'text-slate-900' : 'text-slate-300'}`}>
+              {selectedCountry?.visaTypes.find(v => v.id === localData.visaTypeId)?.name || "Select Visa Category"}
+            </span>
+            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isVisaOpen ? 'rotate-180 text-blue-600' : ''}`} />
+          </div>
+
+          <AnimatePresence>
+            {isVisaOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                className="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl z-50 overflow-hidden"
+              >
+                <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                  <Search className="w-3.5 h-3.5 text-slate-400" />
+                  <input 
+                    autoFocus 
+                    placeholder="Search visa categories..." 
+                    className="w-full bg-transparent text-xs font-semibold focus:outline-none" 
+                    value={visaSearchQuery} 
+                    onChange={(e) => setVisaSearchQuery(e.target.value)} 
+                  />
+                </div>
+                <div className="max-h-60 overflow-y-auto">
+                  {(() => {
+                    const visaOptions = (selectedCountry?.visaTypes && selectedCountry.visaTypes.length > 2 
+                      ? selectedCountry.visaTypes 
+                      : universalVisaProtocol
+                    ).filter(v => v.name.toLowerCase().includes(visaSearchQuery.toLowerCase()));
+
+                    if (visaOptions.length === 0) {
+                      return (
+                        <div className="px-5 py-8 text-center">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">No matching categories</p>
+                        </div>
+                      );
+                    }
+
+                    return visaOptions.map((v) => (
+                      <div 
+                        key={v.id} 
+                        onClick={() => { handleChange('visaTypeId', v.id); setIsVisaOpen(false); setVisaSearchQuery(''); }} 
+                        className="flex flex-col px-5 py-4 cursor-pointer hover:bg-blue-50 transition-all border-b border-slate-50 last:border-0"
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-black text-slate-900 uppercase tracking-tight">{v.name}</span>
+                          {localData.visaTypeId === v.id && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[10px] text-slate-400 font-medium">Processing: <span className="text-blue-600 font-bold">{v.processingTime}</span></p>
+                          <div className="w-1 h-1 rounded-full bg-slate-200" />
+                          <p className="text-[10px] text-slate-400 font-medium whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]">{v.description}</p>
+                        </div>
+                      </div>
+                    ));
+                  })()}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
       {/* --- Travel Dates --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-        <div className="relative">
-          <Input
-            label="Arrival Date"
-            type="date"
-            value={localData.travelDate}
-            onChange={(e) => handleChange('travelDate', e.target.value)}
-            error={getError('travelDate')}
-            required
-            className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900"
-          />
-          <Calendar className="absolute right-0 bottom-4 w-4 h-4 text-slate-300 pointer-events-none" />
-        </div>
-        <div className="relative">
-          <Input
-            label="Departure Date"
-            type="date"
-            value={localData.returnDate}
-            onChange={(e) => handleChange('returnDate', e.target.value)}
-            error={getError('returnDate')}
-            required
-            className="h-12 border-0 border-b border-slate-200 rounded-none bg-transparent px-0 focus:border-blue-600 transition-all font-semibold text-slate-900"
-          />
-          <Calendar className="absolute right-0 bottom-4 w-4 h-4 text-slate-300 pointer-events-none" />
-        </div>
+        <CustomDatePicker 
+          label="Departure Date" 
+          value={localData.returnDate} 
+          minDate={localData.travelDate || today} 
+          onChange={(val) => handleChange('returnDate', val)} 
+          error={getError('returnDate')} 
+          required 
+        />
+        <CustomDatePicker 
+          label="Arrival Date" 
+          value={localData.travelDate} 
+          minDate={today} 
+          onChange={(val) => handleChange('travelDate', val)} 
+          error={getError('travelDate')} 
+          required 
+        />
       </div>
 
       {/* --- Purpose of Visit --- */}

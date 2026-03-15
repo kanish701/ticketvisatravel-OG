@@ -170,6 +170,7 @@ export interface ApplicationFormData {
     lastName: string;
     email: string;
     phone: string;
+    phoneCode: string;
     dateOfBirth: string;
     nationality: string;
     passportNumber: string;

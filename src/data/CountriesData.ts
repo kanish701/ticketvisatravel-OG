@@ -33,22 +33,40 @@ export const countriesData: Country[] = [
         icon: 'Globe'
       },
       {
-        id: 'us-b1b2',
-        name: 'Student Visa',
-        description: 'For international students pursuing academic studies or language training programs in the USA.',
-        duration: '10 Years',
+        id: 'us-student',
+        name: 'F-1 Student Visa',
+        description: 'For international students pursuing academic studies in the USA.',
+        duration: 'Duration of Status',
         price: 10499,
-        processingTime: '3-5 days after interview',
-        icon: 'Globe'
+        processingTime: '3-10 days after interview',
+        icon: 'GraduationCap'
       },
       {
-        id: 'us-b1b2',
-        name: 'H-1B Skilled Worker Visa',
-        description: 'For professionals working in specialty occupations such as IT, engineering, healthcare, and finance.',
+        id: 'us-h1b',
+        name: 'H-1B Skilled Worker',
+        description: 'For professionals in specialty occupations like IT and healthcare.',
+        duration: '3-6 Years',
+        price: 10499,
+        processingTime: 'Varies',
+        icon: 'Briefcase'
+      },
+      {
+        id: 'us-investor',
+        name: 'EB-5 / E-2 Investor Visa',
+        description: 'For individuals investing significant capital in a US business.',
+        duration: 'Permanent/Temporary',
+        price: 10499,
+        processingTime: 'Varies',
+        icon: 'Gem'
+      },
+      {
+        id: 'us-visit',
+        name: 'Visit Visa',
+        description: 'Standard visit visa for family or medical purposes.',
         duration: '10 Years',
         price: 10499,
         processingTime: '3-5 days after interview',
-        icon: 'Globe'
+        icon: 'Home'
       },
       
     ],
@@ -273,12 +291,39 @@ export const countriesData: Country[] = [
     visaTypes: [
       {
         id: 'ca-visitor',
-        name: 'Visitor Visa (Temporary Resident Visa)',
+        name: 'Visitor / Tourist Visa',
         description: 'For tourism, visiting family/friends, or short business trips.',
         duration: 'Up to 10 Years',
         price: 10499,
         processingTime: '30-45 days',
         icon: 'Map'
+      },
+      {
+        id: 'ca-study',
+        name: 'Study Permit',
+        description: 'For international students enrolled at designated learning institutions.',
+        duration: 'Length of Study',
+        price: 10499,
+        processingTime: '60-90 days',
+        icon: 'GraduationCap'
+      },
+      {
+        id: 'ca-work',
+        name: 'Work Permit',
+        description: 'For skilled workers with a valid job offer or LMIA.',
+        duration: 'Up to 3 Years',
+        price: 10499,
+        processingTime: '60-90 days',
+        icon: 'Briefcase'
+      },
+      {
+        id: 'ca-investor',
+        name: 'Start-up / Investor Visa',
+        description: 'For entrepreneurs with the potential to build businesses in Canada.',
+        duration: 'Permanent/Temporary',
+        price: 10499,
+        processingTime: 'Varies',
+        icon: 'Gem'
       }
     ],
     requirements: [
@@ -1220,12 +1265,39 @@ export const countriesData: Country[] = [
     visaTypes: [
       {
         id: 'uk-standard',
-        name: 'Standard Visitor Visa',
-        description: 'For tourism, visiting family/friends, and business meetings.',
+        name: 'Standard Visitor / Tourist',
+        description: 'For tourism, visiting family/friends, and leisure.',
         duration: '6 Months',
         price: 10499,
         processingTime: '15 Working Days',
         icon: 'Umbrella'
+      },
+      {
+        id: 'uk-student',
+        name: 'Student Visa (Tier 4)',
+        description: 'For international students pursuing academic studies in the UK.',
+        duration: 'Length of Course',
+        price: 10499,
+        processingTime: '15 Working Days',
+        icon: 'GraduationCap'
+      },
+      {
+        id: 'uk-work',
+        name: 'Skilled Worker Visa',
+        description: 'For professionals with a job offer from a licensed UK sponsor.',
+        duration: 'Up to 5 Years',
+        price: 10499,
+        processingTime: '15 Working Days',
+        icon: 'Briefcase'
+      },
+      {
+        id: 'uk-investor',
+        name: 'Innovator Founder / Investor',
+        description: 'For experienced entrepreneurs looking to set up a business.',
+        duration: '3 Years',
+        price: 10499,
+        processingTime: 'Varies',
+        icon: 'Gem'
       },
       {
         id: 'uk-long2',

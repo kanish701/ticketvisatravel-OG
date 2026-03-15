@@ -286,17 +286,223 @@ const AIRPORTS = [
 ];
 
 const COUNTRY_CODES = [
-    { name: 'India', code: '+91', flag: '🇮🇳' },
-    { name: 'United Arab Emirates', code: '+971', flag: '🇦🇪' },
-    { name: 'Saudi Arabia', code: '+966', flag: '🇸🇦' },
-    { name: 'Qatar', code: '+974', flag: '🇶🇦' },
-    { name: 'Kuwait', code: '+965', flag: '🇰🇼' },
-    { name: 'Oman', code: '+968', flag: '🇴🇲' },
-    { name: 'Singapore', code: '+65', flag: '🇸🇬' },
-    { name: 'Malaysia', code: '+60', flag: '🇲🇾' },
-    { name: 'United Kingdom', code: '+44', flag: '🇬🇧' },
-    { name: 'USA/Canada', code: '+1', flag: '🇺🇸' },
-    { name: 'Australia', code: '+61', flag: '🇦🇺' },
+  // ── SOUTH ASIA ─────────────────────────────────────────────
+  { name: 'India', code: '+91', flag: '🇮🇳' },
+  { name: 'Pakistan', code: '+92', flag: '🇵🇰' },
+  { name: 'Bangladesh', code: '+880', flag: '🇧🇩' },
+  { name: 'Sri Lanka', code: '+94', flag: '🇱🇰' },
+  { name: 'Nepal', code: '+977', flag: '🇳🇵' },
+  { name: 'Maldives', code: '+960', flag: '🇲🇻' },
+  { name: 'Bhutan', code: '+975', flag: '🇧🇹' },
+  { name: 'Afghanistan', code: '+93', flag: '🇦🇫' },
+
+  // ── MIDDLE EAST ────────────────────────────────────────────
+  { name: 'United Arab Emirates', code: '+971', flag: '🇦🇪' },
+  { name: 'Saudi Arabia', code: '+966', flag: '🇸🇦' },
+  { name: 'Qatar', code: '+974', flag: '🇶🇦' },
+  { name: 'Kuwait', code: '+965', flag: '🇰🇼' },
+  { name: 'Oman', code: '+968', flag: '🇴🇲' },
+  { name: 'Bahrain', code: '+973', flag: '🇧🇭' },
+  { name: 'Jordan', code: '+962', flag: '🇯🇴' },
+  { name: 'Lebanon', code: '+961', flag: '🇱🇧' },
+  { name: 'Israel', code: '+972', flag: '🇮🇱' },
+  { name: 'Palestine', code: '+970', flag: '🇵🇸' },
+  { name: 'Iran', code: '+98', flag: '🇮🇷' },
+  { name: 'Iraq', code: '+964', flag: '🇮🇶' },
+  { name: 'Syria', code: '+963', flag: '🇸🇾' },
+  { name: 'Yemen', code: '+967', flag: '🇾🇪' },
+
+  // ── SOUTHEAST ASIA ─────────────────────────────────────────
+  { name: 'Singapore', code: '+65', flag: '🇸🇬' },
+  { name: 'Malaysia', code: '+60', flag: '🇲🇾' },
+  { name: 'Thailand', code: '+66', flag: '🇹🇭' },
+  { name: 'Indonesia', code: '+62', flag: '🇮🇩' },
+  { name: 'Philippines', code: '+63', flag: '🇵🇭' },
+  { name: 'Vietnam', code: '+84', flag: '🇻🇳' },
+  { name: 'Myanmar', code: '+95', flag: '🇲🇲' },
+  { name: 'Cambodia', code: '+855', flag: '🇰🇭' },
+  { name: 'Laos', code: '+856', flag: '🇱🇦' },
+  { name: 'Brunei', code: '+673', flag: '🇧🇳' },
+  { name: 'Timor-Leste', code: '+670', flag: '🇹🇱' },
+
+  // ── EAST ASIA ──────────────────────────────────────────────
+  { name: 'China', code: '+86', flag: '🇨🇳' },
+  { name: 'Japan', code: '+81', flag: '🇯🇵' },
+  { name: 'South Korea', code: '+82', flag: '🇰🇷' },
+  { name: 'North Korea', code: '+850', flag: '🇰🇵' },
+  { name: 'Hong Kong', code: '+852', flag: '🇭🇰' },
+  { name: 'Macau', code: '+853', flag: '🇲🇴' },
+  { name: 'Taiwan', code: '+886', flag: '🇹🇼' },
+  { name: 'Mongolia', code: '+976', flag: '🇲🇳' },
+
+  // ── CENTRAL ASIA ───────────────────────────────────────────
+  { name: 'Kazakhstan', code: '+7', flag: '🇰🇿' },
+  { name: 'Uzbekistan', code: '+998', flag: '🇺🇿' },
+  { name: 'Turkmenistan', code: '+993', flag: '🇹🇲' },
+  { name: 'Kyrgyzstan', code: '+996', flag: '🇰🇬' },
+  { name: 'Tajikistan', code: '+992', flag: '🇹🇯' },
+
+  // ── EUROPE ─────────────────────────────────────────────────
+  { name: 'United Kingdom', code: '+44', flag: '🇬🇧' },
+  { name: 'Germany', code: '+49', flag: '🇩🇪' },
+  { name: 'France', code: '+33', flag: '🇫🇷' },
+  { name: 'Italy', code: '+39', flag: '🇮🇹' },
+  { name: 'Spain', code: '+34', flag: '🇪🇸' },
+  { name: 'Portugal', code: '+351', flag: '🇵🇹' },
+  { name: 'Netherlands', code: '+31', flag: '🇳🇱' },
+  { name: 'Belgium', code: '+32', flag: '🇧🇪' },
+  { name: 'Switzerland', code: '+41', flag: '🇨🇭' },
+  { name: 'Austria', code: '+43', flag: '🇦🇹' },
+  { name: 'Sweden', code: '+46', flag: '🇸🇪' },
+  { name: 'Norway', code: '+47', flag: '🇳🇴' },
+  { name: 'Denmark', code: '+45', flag: '🇩🇰' },
+  { name: 'Finland', code: '+358', flag: '🇫🇮' },
+  { name: 'Ireland', code: '+353', flag: '🇮🇪' },
+  { name: 'Greece', code: '+30', flag: '🇬🇷' },
+  { name: 'Turkey', code: '+90', flag: '🇹🇷' },
+  { name: 'Russia', code: '+7', flag: '🇷🇺' },
+  { name: 'Ukraine', code: '+380', flag: '🇺🇦' },
+  { name: 'Poland', code: '+48', flag: '🇵🇱' },
+  { name: 'Czech Republic', code: '+420', flag: '🇨🇿' },
+  { name: 'Slovakia', code: '+421', flag: '🇸🇰' },
+  { name: 'Hungary', code: '+36', flag: '🇭🇺' },
+  { name: 'Romania', code: '+40', flag: '🇷🇴' },
+  { name: 'Bulgaria', code: '+359', flag: '🇧🇬' },
+  { name: 'Serbia', code: '+381', flag: '🇷🇸' },
+  { name: 'Croatia', code: '+385', flag: '🇭🇷' },
+  { name: 'Slovenia', code: '+386', flag: '🇸🇮' },
+  { name: 'Bosnia & Herzegovina', code: '+387', flag: '🇧🇦' },
+  { name: 'Montenegro', code: '+382', flag: '🇲🇪' },
+  { name: 'North Macedonia', code: '+389', flag: '🇲🇰' },
+  { name: 'Albania', code: '+355', flag: '🇦🇱' },
+  { name: 'Kosovo', code: '+383', flag: '🇽🇰' },
+  { name: 'Latvia', code: '+371', flag: '🇱🇻' },
+  { name: 'Lithuania', code: '+370', flag: '🇱🇹' },
+  { name: 'Estonia', code: '+372', flag: '🇪🇪' },
+  { name: 'Belarus', code: '+375', flag: '🇧🇾' },
+  { name: 'Moldova', code: '+373', flag: '🇲🇩' },
+  { name: 'Luxembourg', code: '+352', flag: '🇱🇺' },
+  { name: 'Iceland', code: '+354', flag: '🇮🇸' },
+  { name: 'Malta', code: '+356', flag: '🇲🇹' },
+  { name: 'Cyprus', code: '+357', flag: '🇨🇾' },
+  { name: 'Georgia', code: '+995', flag: '🇬🇪' },
+  { name: 'Armenia', code: '+374', flag: '🇦🇲' },
+  { name: 'Azerbaijan', code: '+994', flag: '🇦🇿' },
+  { name: 'Liechtenstein', code: '+423', flag: '🇱🇮' },
+  { name: 'Monaco', code: '+377', flag: '🇲🇨' },
+  { name: 'Andorra', code: '+376', flag: '🇦🇩' },
+  { name: 'San Marino', code: '+378', flag: '🇸🇲' },
+  { name: 'Vatican City', code: '+379', flag: '🇻🇦' },
+
+  // ── NORTH AMERICA ──────────────────────────────────────────
+  { name: 'USA', code: '+1', flag: '🇺🇸' },
+  { name: 'Canada', code: '+1', flag: '🇨🇦' },
+  { name: 'Mexico', code: '+52', flag: '🇲🇽' },
+
+  // ── CARIBBEAN ──────────────────────────────────────────────
+  { name: 'Cuba', code: '+53', flag: '🇨🇺' },
+  { name: 'Jamaica', code: '+1876', flag: '🇯🇲' },
+  { name: 'Haiti', code: '+509', flag: '🇭🇹' },
+  { name: 'Dominican Republic', code: '+1809', flag: '🇩🇴' },
+  { name: 'Puerto Rico', code: '+1787', flag: '🇵🇷' },
+  { name: 'Trinidad & Tobago', code: '+1868', flag: '🇹🇹' },
+  { name: 'Barbados', code: '+1246', flag: '🇧🇧' },
+  { name: 'Bahamas', code: '+1242', flag: '🇧🇸' },
+
+  // ── CENTRAL AMERICA ────────────────────────────────────────
+  { name: 'Guatemala', code: '+502', flag: '🇬🇹' },
+  { name: 'Belize', code: '+501', flag: '🇧🇿' },
+  { name: 'Honduras', code: '+504', flag: '🇭🇳' },
+  { name: 'El Salvador', code: '+503', flag: '🇸🇻' },
+  { name: 'Nicaragua', code: '+505', flag: '🇳🇮' },
+  { name: 'Costa Rica', code: '+506', flag: '🇨🇷' },
+  { name: 'Panama', code: '+507', flag: '🇵🇦' },
+
+  // ── SOUTH AMERICA ──────────────────────────────────────────
+  { name: 'Brazil', code: '+55', flag: '🇧🇷' },
+  { name: 'Argentina', code: '+54', flag: '🇦🇷' },
+  { name: 'Colombia', code: '+57', flag: '🇨🇴' },
+  { name: 'Chile', code: '+56', flag: '🇨🇱' },
+  { name: 'Peru', code: '+51', flag: '🇵🇪' },
+  { name: 'Venezuela', code: '+58', flag: '🇻🇪' },
+  { name: 'Ecuador', code: '+593', flag: '🇪🇨' },
+  { name: 'Bolivia', code: '+591', flag: '🇧🇴' },
+  { name: 'Paraguay', code: '+595', flag: '🇵🇾' },
+  { name: 'Uruguay', code: '+598', flag: '🇺🇾' },
+  { name: 'Guyana', code: '+592', flag: '🇬🇾' },
+  { name: 'Suriname', code: '+597', flag: '🇸🇷' },
+
+  // ── AFRICA ─────────────────────────────────────────────────
+  { name: 'Nigeria', code: '+234', flag: '🇳🇬' },
+  { name: 'South Africa', code: '+27', flag: '🇿🇦' },
+  { name: 'Egypt', code: '+20', flag: '🇪🇬' },
+  { name: 'Kenya', code: '+254', flag: '🇰🇪' },
+  { name: 'Ethiopia', code: '+251', flag: '🇪🇹' },
+  { name: 'Ghana', code: '+233', flag: '🇬🇭' },
+  { name: 'Tanzania', code: '+255', flag: '🇹🇿' },
+  { name: 'Uganda', code: '+256', flag: '🇺🇬' },
+  { name: 'Morocco', code: '+212', flag: '🇲🇦' },
+  { name: 'Algeria', code: '+213', flag: '🇩🇿' },
+  { name: 'Tunisia', code: '+216', flag: '🇹🇳' },
+  { name: 'Libya', code: '+218', flag: '🇱🇾' },
+  { name: 'Sudan', code: '+249', flag: '🇸🇩' },
+  { name: 'South Sudan', code: '+211', flag: '🇸🇸' },
+  { name: 'Senegal', code: '+221', flag: '🇸🇳' },
+  { name: 'Ivory Coast', code: '+225', flag: '🇨🇮' },
+  { name: 'Cameroon', code: '+237', flag: '🇨🇲' },
+  { name: 'Angola', code: '+244', flag: '🇦🇴' },
+  { name: 'Mozambique', code: '+258', flag: '🇲🇿' },
+  { name: 'Zimbabwe', code: '+263', flag: '🇿🇼' },
+  { name: 'Zambia', code: '+260', flag: '🇿🇲' },
+  { name: 'Rwanda', code: '+250', flag: '🇷🇼' },
+  { name: 'Somalia', code: '+252', flag: '🇸🇴' },
+  { name: 'Madagascar', code: '+261', flag: '🇲🇬' },
+  { name: 'Mali', code: '+223', flag: '🇲🇱' },
+  { name: 'Burkina Faso', code: '+226', flag: '🇧🇫' },
+  { name: 'Niger', code: '+227', flag: '🇳🇪' },
+  { name: 'Chad', code: '+235', flag: '🇹🇩' },
+  { name: 'Guinea', code: '+224', flag: '🇬🇳' },
+  { name: 'Benin', code: '+229', flag: '🇧🇯' },
+  { name: 'Togo', code: '+228', flag: '🇹🇬' },
+  { name: 'Sierra Leone', code: '+232', flag: '🇸🇱' },
+  { name: 'Liberia', code: '+231', flag: '🇱🇷' },
+  { name: 'Malawi', code: '+265', flag: '🇲🇼' },
+  { name: 'Namibia', code: '+264', flag: '🇳🇦' },
+  { name: 'Botswana', code: '+267', flag: '🇧🇼' },
+  { name: 'Mauritius', code: '+230', flag: '🇲🇺' },
+  { name: 'Eswatini', code: '+268', flag: '🇸🇿' },
+  { name: 'Lesotho', code: '+266', flag: '🇱🇸' },
+  { name: 'Djibouti', code: '+253', flag: '🇩🇯' },
+  { name: 'Eritrea', code: '+291', flag: '🇪🇷' },
+  { name: 'Congo (DRC)', code: '+243', flag: '🇨🇩' },
+  { name: 'Congo (Republic)', code: '+242', flag: '🇨🇬' },
+  { name: 'Gabon', code: '+241', flag: '🇬🇦' },
+  { name: 'Equatorial Guinea', code: '+240', flag: '🇬🇶' },
+  { name: 'Central African Republic', code: '+236', flag: '🇨🇫' },
+  { name: 'Burundi', code: '+257', flag: '🇧🇮' },
+  { name: 'Comoros', code: '+269', flag: '🇰🇲' },
+  { name: 'Cape Verde', code: '+238', flag: '🇨🇻' },
+  { name: 'São Tomé & Príncipe', code: '+239', flag: '🇸🇹' },
+  { name: 'Seychelles', code: '+248', flag: '🇸🇨' },
+  { name: 'Guinea-Bissau', code: '+245', flag: '🇬🇼' },
+  { name: 'Gambia', code: '+220', flag: '🇬🇲' },
+
+  // ── OCEANIA ────────────────────────────────────────────────
+  { name: 'Australia', code: '+61', flag: '🇦🇺' },
+  { name: 'New Zealand', code: '+64', flag: '🇳🇿' },
+  { name: 'Fiji', code: '+679', flag: '🇫🇯' },
+  { name: 'Papua New Guinea', code: '+675', flag: '🇵🇬' },
+  { name: 'Solomon Islands', code: '+677', flag: '🇸🇧' },
+  { name: 'Vanuatu', code: '+678', flag: '🇻🇺' },
+  { name: 'Samoa', code: '+685', flag: '🇼🇸' },
+  { name: 'Tonga', code: '+676', flag: '🇹🇴' },
+  { name: 'Kiribati', code: '+686', flag: '🇰🇮' },
+  { name: 'Micronesia', code: '+691', flag: '🇫🇲' },
+  { name: 'Palau', code: '+680', flag: '🇵🇼' },
+  { name: 'Marshall Islands', code: '+692', flag: '🇲🇭' },
+  { name: 'Nauru', code: '+674', flag: '🇳🇷' },
+  { name: 'Tuvalu', code: '+688', flag: '🇹🇻' },
+
 ];
 
 const FlightSearchPage = () => {
@@ -318,6 +524,7 @@ const FlightSearchPage = () => {
     const [showDepartureCalendar, setShowDepartureCalendar] = useState(false);
     const [showReturnCalendar, setShowReturnCalendar] = useState(false);
     const [viewDate, setViewDate] = useState(new Date());
+    const [countrySearchQuery, setCountrySearchQuery] = useState('');
 
     const fromRef = useRef<HTMLDivElement>(null);
     const toRef = useRef<HTMLDivElement>(null);
@@ -332,7 +539,10 @@ const FlightSearchPage = () => {
             if (fromRef.current && !fromRef.current.contains(event.target as Node)) setShowFromDropdown(false);
             if (toRef.current && !toRef.current.contains(event.target as Node)) setShowToDropdown(false);
             if (travellerRef.current && !travellerRef.current.contains(event.target as Node)) setShowTravellerDropdown(false);
-            if (countryRef.current && !countryRef.current.contains(event.target as Node)) setShowCountryDropdown(false);
+            if (countryRef.current && !countryRef.current.contains(event.target as Node)) {
+                setShowCountryDropdown(false);
+                setCountrySearchQuery('');
+            }
             if (purposeRef.current && !purposeRef.current.contains(event.target as Node)) setShowPurposeDropdown(false);
             if (departureRef.current && !departureRef.current.contains(event.target as Node)) setShowDepartureCalendar(false);
             if (returnRef.current && !returnRef.current.contains(event.target as Node)) setShowReturnCalendar(false);
@@ -494,13 +704,30 @@ const FlightSearchPage = () => {
                                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
                                             className="absolute top-full left-0 mt-2 w-64 bg-white/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 rounded-2xl z-[110] overflow-hidden py-2"
                                         >
+                                            <div className="p-3 border-b border-white/20 sticky top-0 bg-white/10 backdrop-blur-md z-10">
+                                                <div className="relative">
+                                                    <Search size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                    <input 
+                                                        type="text"
+                                                        value={countrySearchQuery}
+                                                        onChange={(e) => setCountrySearchQuery(e.target.value)}
+                                                        placeholder="Search country..."
+                                                        className="w-full bg-white/20 border border-white/30 rounded-lg py-1.5 pl-8 pr-3 text-[10px] font-bold text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-900/40 transition-all"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    />
+                                                </div>
+                                            </div>
                                             <div className="max-h-64 overflow-y-auto custom-scrollbar">
-                                                {COUNTRY_CODES.map((c) => (
+                                                {COUNTRY_CODES.filter(c => 
+                                                    c.name.toLowerCase().includes(countrySearchQuery.toLowerCase()) || 
+                                                    c.code.includes(countrySearchQuery)
+                                                ).map((c) => (
                                                     <div 
                                                         key={c.code}
                                                         onClick={() => {
                                                             setSearchData({ ...searchData, countryCode: c.code });
                                                             setShowCountryDropdown(false);
+                                                            setCountrySearchQuery('');
                                                         }}
                                                         className={`px-4 py-3 hover:bg-blue-900 hover:text-white cursor-pointer transition-all flex items-center justify-between ${searchData.countryCode === c.code ? 'bg-blue-50 text-blue-900' : 'text-slate-600'}`}
                                                     >
@@ -511,6 +738,14 @@ const FlightSearchPage = () => {
                                                         <span className="text-[10px] font-black opacity-40">{c.code}</span>
                                                     </div>
                                                 ))}
+                                                {COUNTRY_CODES.filter(c => 
+                                                    c.name.toLowerCase().includes(countrySearchQuery.toLowerCase()) || 
+                                                    c.code.includes(countrySearchQuery)
+                                                ).length === 0 && (
+                                                    <div className="px-6 py-8 text-center">
+                                                        <p className="text-[10px] font-black uppercase text-slate-300 italic tracking-widest">No matching registry found</p>
+                                                    </div>
+                                                )}
                                             </div>
                                         </motion.div>
                                     )}
